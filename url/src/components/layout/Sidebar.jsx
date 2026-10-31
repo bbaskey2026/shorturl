@@ -9,8 +9,8 @@ import {
   IconCreditCard,
   IconShield,
   IconZap,
-  IconChevronRight,
   IconMenu,
+  IconLayers,
 } from '../common/Icons';
 
 export const Sidebar = ({
@@ -20,14 +20,15 @@ export const Sidebar = ({
   onToggleCollapse,
 }) => {
   const navItems = [
-    { id: 'dashboard', label: 'Overview', icon: <IconBarChart size={18} /> },
-    { id: 'links', label: 'Links', icon: <IconLink size={18} />, badge: '5' },
-    { id: 'analytics', label: 'Analytics', icon: <IconBarChart size={18} /> },
-    { id: 'domains', label: 'Custom Domains', icon: <IconGlobe size={18} /> },
-    { id: 'qrcodes', label: 'QR Studio', icon: <IconQrCode size={18} /> },
-    { id: 'folders', label: 'Folders & Tags', icon: <IconFolder size={18} /> },
-    { id: 'subscriptions', label: 'Plans & Limits', icon: <IconCreditCard size={18} /> },
-    { id: 'admin', label: 'Admin Portal', icon: <IconShield size={18} />, badge: 'Staff' },
+    { id: 'dashboard', label: 'Overview', icon: <IconBarChart size={17} /> },
+    { id: 'services', label: 'Platform Services', icon: <IconLayers size={17} />, badge: 'Core' },
+    { id: 'links', label: 'Links', icon: <IconLink size={17} />, badge: '5' },
+    { id: 'analytics', label: 'Analytics', icon: <IconBarChart size={17} /> },
+    { id: 'domains', label: 'Custom Domains', icon: <IconGlobe size={17} /> },
+    { id: 'qrcodes', label: 'QR Studio', icon: <IconQrCode size={17} /> },
+    { id: 'folders', label: 'Folders & Tags', icon: <IconFolder size={17} /> },
+    { id: 'subscriptions', label: 'Plans & Limits', icon: <IconCreditCard size={17} /> },
+    { id: 'admin', label: 'Admin Portal', icon: <IconShield size={17} />, badge: 'Staff' },
   ];
 
   return (
@@ -36,14 +37,14 @@ export const Sidebar = ({
         {!isCollapsed && (
           <div className={styles.logo}>
             <div className={styles.logoIcon}>
-              <IconZap size={18} />
+              <IconZap size={16} />
             </div>
             <span>ShortSaaS</span>
           </div>
         )}
         {isCollapsed && (
           <div className={styles.logoIcon} style={{ margin: '0 auto' }}>
-            <IconZap size={18} />
+            <IconZap size={16} />
           </div>
         )}
         <button
@@ -75,10 +76,10 @@ export const Sidebar = ({
                       style={{
                         fontSize: '11px',
                         padding: '1px 6px',
-                        borderRadius: '10px',
-                        backgroundColor: item.badge === 'Staff' ? 'rgba(239, 68, 68, 0.15)' : 'var(--color-bg-hover)',
-                        color: item.badge === 'Staff' ? '#EF4444' : 'var(--color-text-muted)',
-                        fontWeight: 600,
+                        borderRadius: 'var(--radius-full)',
+                        backgroundColor: item.badge === 'Staff' ? 'rgba(242, 0, 57, 0.12)' : 'var(--color-bg-elevated)',
+                        color: item.badge === 'Staff' ? '#F20039' : 'var(--color-text-secondary)',
+                        fontWeight: 500,
                       }}
                     >
                       {item.badge}
@@ -95,7 +96,7 @@ export const Sidebar = ({
         <div className={styles.sidebarFooter}>
           <div className={styles.planCard}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-primary-light)' }}>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 Pro Plan
               </span>
               <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>42% used</span>
@@ -105,8 +106,8 @@ export const Sidebar = ({
               style={{
                 height: '4px',
                 width: '100%',
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                borderRadius: '2px',
+                backgroundColor: 'var(--color-border-subtle)',
+                borderRadius: 'var(--radius-full)',
                 overflow: 'hidden',
               }}
             >
@@ -115,7 +116,7 @@ export const Sidebar = ({
                   height: '100%',
                   width: '42%',
                   backgroundColor: 'var(--color-primary)',
-                  borderRadius: '2px',
+                  borderRadius: 'var(--radius-full)',
                 }}
               />
             </div>
@@ -130,4 +131,3 @@ export const Sidebar = ({
 };
 
 export default Sidebar;
-

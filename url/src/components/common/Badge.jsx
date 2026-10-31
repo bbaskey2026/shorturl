@@ -11,37 +11,37 @@ export const Badge = ({
     switch (variant) {
       case 'success':
         return {
-          bg: 'rgba(16, 185, 129, 0.12)',
-          color: '#10B981',
-          border: 'rgba(16, 185, 129, 0.25)',
+          bg: 'var(--color-status-success-bg, rgba(0, 169, 25, 0.12))',
+          color: 'var(--color-status-success)',
+          border: 'rgba(0, 169, 25, 0.25)',
         };
       case 'warning':
         return {
-          bg: 'rgba(245, 158, 11, 0.12)',
-          color: '#F59E0B',
-          border: 'rgba(245, 158, 11, 0.25)',
+          bg: 'var(--color-status-warning-bg, rgba(248, 106, 0, 0.12))',
+          color: 'var(--color-status-warning)',
+          border: 'rgba(248, 106, 0, 0.25)',
         };
       case 'error':
         return {
-          bg: 'rgba(239, 68, 68, 0.12)',
-          color: '#EF4444',
-          border: 'rgba(239, 68, 68, 0.25)',
+          bg: 'var(--color-status-error-bg, rgba(242, 0, 57, 0.12))',
+          color: 'var(--color-status-error)',
+          border: 'rgba(242, 0, 57, 0.25)',
         };
       case 'info':
         return {
-          bg: 'rgba(59, 130, 246, 0.12)',
-          color: '#3B82F6',
-          border: 'rgba(59, 130, 246, 0.25)',
+          bg: 'var(--color-status-info-bg, rgba(0, 116, 228, 0.12))',
+          color: 'var(--color-primary)',
+          border: 'rgba(0, 116, 228, 0.25)',
         };
       case 'purple':
         return {
-          bg: 'rgba(139, 92, 246, 0.12)',
-          color: '#8B5CF6',
-          border: 'rgba(139, 92, 246, 0.25)',
+          bg: 'rgba(128, 90, 213, 0.12)',
+          color: '#9F7AEA',
+          border: 'rgba(128, 90, 213, 0.25)',
         };
       default:
         return {
-          bg: 'var(--color-bg-hover)',
+          bg: 'var(--color-bg-elevated)',
           color: 'var(--color-text-secondary)',
           border: 'var(--color-border-subtle)',
         };
@@ -49,8 +49,8 @@ export const Badge = ({
   };
 
   const c = getColors();
-  const padding = size === 'sm' ? '2px 8px' : '4px 10px';
-  const fontSize = size === 'sm' ? '11px' : '12px';
+  const padding = size === 'sm' ? '2px 7px' : '3px 9px';
+  const fontSize = size === 'sm' ? '11px' : '11.5px';
 
   return (
     <span
@@ -58,7 +58,7 @@ export const Badge = ({
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '6px',
+        gap: '5px',
         padding,
         fontSize,
         fontWeight: 500,
@@ -72,8 +72,8 @@ export const Badge = ({
       {dot && (
         <span
           style={{
-            width: '6px',
-            height: '6px',
+            width: '5px',
+            height: '5px',
             borderRadius: '50%',
             backgroundColor: c.color,
           }}
@@ -85,4 +85,3 @@ export const Badge = ({
 };
 
 export default Badge;
-

@@ -63,6 +63,7 @@ export const ThemeProvider = ({ children }) => {
     root.style.setProperty('--color-bg-elevated', p.background.elevated);
     root.style.setProperty('--color-bg-hover', p.background.hover);
     root.style.setProperty('--color-bg-active', p.background.active);
+    root.style.setProperty('--color-bg-backdrop', p.background.backdrop);
 
     root.style.setProperty('--color-text-primary', p.text.primary);
     root.style.setProperty('--color-text-secondary', p.text.secondary);
@@ -79,12 +80,14 @@ export const ThemeProvider = ({ children }) => {
     root.style.setProperty('--color-status-success', p.status.success);
     root.style.setProperty('--color-status-warning', p.status.warning);
     root.style.setProperty('--color-status-error', p.status.error);
+    root.style.setProperty('--color-status-info', p.status.info);
 
     root.style.setProperty('--shadow-card', currentTokens.shadows.card);
     root.style.setProperty('--shadow-card-hover', currentTokens.shadows.cardHover);
     root.style.setProperty('--shadow-dropdown', currentTokens.shadows.dropdown);
 
     root.style.setProperty('--font-family', tokens.typography.fontFamily);
+    root.style.setProperty('--font-body', tokens.typography.bodyFamily);
     root.style.setProperty('--font-code', tokens.typography.codeFamily);
 
     root.setAttribute('data-theme', activeMode);
@@ -108,4 +111,3 @@ export const ThemeProvider = ({ children }) => {
 };
 
 export const useTheme = () => useContext(ThemeContext);
-

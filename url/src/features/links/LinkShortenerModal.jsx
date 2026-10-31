@@ -2,15 +2,10 @@ import React, { useState } from 'react';
 import Modal from '../../components/common/Modal';
 import { CustomQR } from '../../components/common/CustomQR';
 import {
-  IconLink,
   IconCopy,
   IconCheck,
   IconCalendar,
   IconLock,
-  IconGlobe,
-  IconFolder,
-  IconTag,
-  IconQrCode,
   IconExternalLink,
 } from '../../components/common/Icons';
 
@@ -31,7 +26,6 @@ export const LinkShortenerModal = ({
   const [password, setPassword] = useState('');
   const [hasPassword, setHasPassword] = useState(false);
   const [hasExpiry, setHasExpiry] = useState(false);
-  const [showQR, setShowQR] = useState(false);
 
   const [createdResult, setCreatedResult] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -48,7 +42,6 @@ export const LinkShortenerModal = ({
     setHasPassword(false);
     setHasExpiry(false);
     setCreatedResult(null);
-    setShowQR(false);
     setError('');
   };
 
@@ -114,23 +107,23 @@ export const LinkShortenerModal = ({
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title={createdResult ? 'Link Created Successfully!' : 'Create Short Link'}
+      title={createdResult ? 'Link Created Successfully' : 'Create Short Link'}
     >
       {createdResult ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div
             style={{
-              padding: '16px',
-              backgroundColor: 'rgba(16, 185, 129, 0.08)',
-              border: '1px solid rgba(16, 185, 129, 0.25)',
-              borderRadius: 'var(--radius-md)',
+              padding: '14px',
+              backgroundColor: 'var(--color-bg-elevated)',
+              border: '1px solid var(--color-border-subtle)',
+              borderRadius: 'var(--radius-lg)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px',
+              gap: '10px',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: '#10B981' }}>
+              <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--color-status-success)', letterSpacing: '0.04em' }}>
                 LIVE SHORT URL
               </span>
               <a
@@ -141,11 +134,11 @@ export const LinkShortenerModal = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  fontSize: '12px',
-                  color: 'var(--color-primary-light)',
+                  fontSize: '11.5px',
+                  color: 'var(--color-primary)',
                 }}
               >
-                Test destination <IconExternalLink size={13} />
+                Test destination <IconExternalLink size={12} />
               </a>
             </div>
 
@@ -154,13 +147,13 @@ export const LinkShortenerModal = ({
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                backgroundColor: 'var(--color-bg-card)',
+                backgroundColor: 'var(--color-bg-paper)',
                 padding: '8px 12px',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-md)',
                 border: '1px solid var(--color-border-subtle)',
               }}
             >
-              <span style={{ flex: 1, fontFamily: 'var(--font-code)', fontSize: '14px', fontWeight: 600 }}>
+              <span style={{ flex: 1, fontFamily: 'var(--font-code)', fontSize: '13.5px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 {fullShortUrl}
               </span>
               <button
@@ -168,36 +161,36 @@ export const LinkShortenerModal = ({
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  padding: '6px 12px',
-                  backgroundColor: copied ? '#10B981' : 'var(--color-primary)',
-                  color: 'white',
-                  borderRadius: '6px',
+                  gap: '5px',
+                  padding: '5px 12px',
+                  backgroundColor: copied ? 'var(--color-status-success)' : 'var(--color-primary)',
+                  color: '#FFFFFF',
+                  borderRadius: 'var(--radius-sm)',
                   fontSize: '12px',
-                  fontWeight: 600,
-                  transition: 'all 0.2s',
+                  fontWeight: 500,
+                  transition: 'background-color var(--transition-fast)',
                 }}
               >
-                {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-                {copied ? 'Copied!' : 'Copy'}
+                {copied ? <IconCheck size={13} /> : <IconCopy size={13} />}
+                {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0' }}>
-            <CustomQR value={fullShortUrl} size={180} fgColor="#3B82F6" />
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '6px 0' }}>
+            <CustomQR value={fullShortUrl} size={180} fgColor="var(--color-primary)" bgColor="var(--color-bg-paper)" />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
             <button
               onClick={handleReset}
               style={{
-                padding: '8px 16px',
-                borderRadius: '8px',
-                backgroundColor: 'var(--color-bg-hover)',
-                color: 'var(--color-text-primary)',
+                padding: '8px 14px',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: 'transparent',
+                color: 'var(--color-text-secondary)',
                 border: '1px solid var(--color-border-subtle)',
-                fontSize: '13px',
+                fontSize: '12.5px',
               }}
             >
               Create Another
@@ -205,12 +198,12 @@ export const LinkShortenerModal = ({
             <button
               onClick={handleClose}
               style={{
-                padding: '8px 20px',
-                borderRadius: '8px',
+                padding: '8px 18px',
+                borderRadius: 'var(--radius-md)',
                 backgroundColor: 'var(--color-primary)',
-                color: 'white',
-                fontSize: '13px',
-                fontWeight: 600,
+                color: '#FFFFFF',
+                fontSize: '12.5px',
+                fontWeight: 500,
               }}
             >
               Done
@@ -218,16 +211,16 @@ export const LinkShortenerModal = ({
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {error && (
             <div
               style={{
-                padding: '10px 14px',
-                borderRadius: '8px',
-                backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                color: '#EF4444',
-                fontSize: '13px',
+                padding: '9px 12px',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: 'rgba(242, 0, 57, 0.1)',
+                border: '1px solid rgba(242, 0, 57, 0.25)',
+                color: 'var(--color-status-error)',
+                fontSize: '12.5px',
               }}
             >
               {error}
@@ -235,9 +228,9 @@ export const LinkShortenerModal = ({
           )}
 
           {/* Destination URL */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
-              Destination URL <span style={{ color: '#EF4444' }}>*</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+              Destination URL <span style={{ color: 'var(--color-status-error)' }}>*</span>
             </label>
             <input
               type="url"
@@ -246,32 +239,32 @@ export const LinkShortenerModal = ({
               onChange={(e) => setOriginalUrl(e.target.value)}
               required
               style={{
-                padding: '10px 14px',
+                padding: '9px 12px',
                 backgroundColor: 'var(--color-bg-elevated)',
                 border: '1px solid var(--color-border-subtle)',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-md)',
                 color: 'var(--color-text-primary)',
-                fontSize: '13.5px',
+                fontSize: '13px',
               }}
             />
           </div>
 
           {/* Domain and Custom Slug */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Domain
               </label>
               <select
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               >
                 {domains.map((d) => (
@@ -282,8 +275,8 @@ export const LinkShortenerModal = ({
               </select>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Custom Alias (optional)
               </label>
               <input
@@ -292,21 +285,21 @@ export const LinkShortenerModal = ({
                 value={customSlug}
                 onChange={(e) => setCustomSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-_]/g, ''))}
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               />
             </div>
           </div>
 
           {/* Title & Folder */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '12px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Link Title (optional)
               </label>
               <input
@@ -315,30 +308,30 @@ export const LinkShortenerModal = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Folder
               </label>
               <select
                 value={folderId}
                 onChange={(e) => setFolderId(e.target.value)}
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               >
                 <option value="">No folder</option>
@@ -352,46 +345,46 @@ export const LinkShortenerModal = ({
           </div>
 
           {/* Tags */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
               Tags (comma separated)
             </label>
             <input
               type="text"
-              placeholder="e.g. marketing, 2026, launch"
+              placeholder="e.g. marketing, launch"
               value={tagsInput}
               onChange={(e) => setTagsInput(e.target.value)}
               style={{
-                padding: '10px 14px',
+                padding: '9px 12px',
                 backgroundColor: 'var(--color-bg-elevated)',
                 border: '1px solid var(--color-border-subtle)',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-md)',
                 color: 'var(--color-text-primary)',
-                fontSize: '13.5px',
+                fontSize: '13px',
               }}
             />
           </div>
 
-          {/* Optional Protections (Accordion/Toggles) */}
+          {/* Optional Protections */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '10px',
-              padding: '14px',
-              borderRadius: '8px',
+              gap: '8px',
+              padding: '12px',
+              borderRadius: 'var(--radius-md)',
               backgroundColor: 'var(--color-bg-elevated)',
               border: '1px solid var(--color-border-subtle)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', cursor: 'pointer', color: 'var(--color-text-secondary)' }}>
                 <input
                   type="checkbox"
                   checked={hasExpiry}
                   onChange={(e) => setHasExpiry(e.target.checked)}
                 />
-                <IconCalendar size={15} color="var(--color-primary-light)" />
+                <IconCalendar size={14} color="var(--color-primary)" />
                 <span>Set Expiration Date</span>
               </label>
               {hasExpiry && (
@@ -400,9 +393,9 @@ export const LinkShortenerModal = ({
                   value={expiresAt}
                   onChange={(e) => setExpiresAt(e.target.value)}
                   style={{
-                    padding: '4px 8px',
-                    borderRadius: '6px',
-                    backgroundColor: 'var(--color-bg-card)',
+                    padding: '3px 8px',
+                    borderRadius: 'var(--radius-sm)',
+                    backgroundColor: 'var(--color-bg-paper)',
                     border: '1px solid var(--color-border-subtle)',
                     color: 'var(--color-text-primary)',
                     fontSize: '12px',
@@ -412,13 +405,13 @@ export const LinkShortenerModal = ({
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', cursor: 'pointer', color: 'var(--color-text-secondary)' }}>
                 <input
                   type="checkbox"
                   checked={hasPassword}
                   onChange={(e) => setHasPassword(e.target.checked)}
                 />
-                <IconLock size={15} color="var(--color-secondary)" />
+                <IconLock size={14} color="var(--color-text-muted)" />
                 <span>Password Protection</span>
               </label>
               {hasPassword && (
@@ -428,9 +421,9 @@ export const LinkShortenerModal = ({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{
-                    padding: '4px 8px',
-                    borderRadius: '6px',
-                    backgroundColor: 'var(--color-bg-card)',
+                    padding: '3px 8px',
+                    borderRadius: 'var(--radius-sm)',
+                    backgroundColor: 'var(--color-bg-paper)',
                     border: '1px solid var(--color-border-subtle)',
                     color: 'var(--color-text-primary)',
                     fontSize: '12px',
@@ -450,24 +443,24 @@ export const LinkShortenerModal = ({
               gap: '6px',
             }}
           >
-            <span>Result will be:</span>
-            <span style={{ color: 'var(--color-primary-light)', fontWeight: 600, fontFamily: 'var(--font-code)' }}>
+            <span>Result:</span>
+            <span style={{ color: 'var(--color-primary)', fontWeight: 500, fontFamily: 'var(--font-code)' }}>
               {fullShortUrl}
             </span>
           </div>
 
           {/* Submit Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '6px' }}>
             <button
               type="button"
               onClick={handleClose}
               style={{
-                padding: '10px 16px',
-                borderRadius: '8px',
+                padding: '8px 14px',
+                borderRadius: 'var(--radius-md)',
                 backgroundColor: 'transparent',
                 color: 'var(--color-text-secondary)',
                 border: '1px solid var(--color-border-subtle)',
-                fontSize: '13px',
+                fontSize: '12.5px',
               }}
             >
               Cancel
@@ -475,13 +468,13 @@ export const LinkShortenerModal = ({
             <button
               type="submit"
               style={{
-                padding: '10px 24px',
-                borderRadius: '8px',
+                padding: '8px 20px',
+                borderRadius: 'var(--radius-md)',
                 backgroundColor: 'var(--color-primary)',
-                color: 'white',
-                fontSize: '13.5px',
-                fontWeight: 600,
-                boxShadow: '0 2px 10px rgba(59, 130, 246, 0.3)',
+                color: '#FFFFFF',
+                fontSize: '12.5px',
+                fontWeight: 500,
+                border: 'none',
               }}
             >
               Create Short Link
@@ -494,4 +487,3 @@ export const LinkShortenerModal = ({
 };
 
 export default LinkShortenerModal;
-

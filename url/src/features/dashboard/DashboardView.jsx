@@ -9,9 +9,7 @@ import {
   IconArrowUpRight,
   IconCopy,
   IconCheck,
-  IconExternalLink,
   IconGlobe,
-  IconCalendar,
   IconLock,
 } from '../../components/common/Icons';
 
@@ -20,10 +18,7 @@ export const DashboardView = ({
   analytics,
   onOpenShortener,
   onSelectTab,
-  onToggleLinkActive,
-  onSelectLinkForAnalytics,
 }) => {
-  const [quickUrl, setQuickUrl] = useState('');
   const [copiedId, setCopiedId] = useState(null);
 
   const totalLinks = links.length;
@@ -69,46 +64,65 @@ export const DashboardView = ({
   const areaString = `${pointsString} ${chartWidth},${chartHeight} 0,${chartHeight}`;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Welcome & Quick Bar */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Welcome & Overview Header */}
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
           gap: '16px',
-          padding: '24px',
-          borderRadius: 'var(--radius-lg)',
-          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%)',
-          border: '1px solid rgba(59, 130, 246, 0.2)',
-          position: 'relative',
+          padding: '22px 24px',
+          borderRadius: 'var(--radius-xl)',
+          backgroundColor: 'var(--color-bg-paper)',
+          border: '1px solid var(--color-border-subtle)',
+          boxShadow: 'var(--shadow-card)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-          <div>
-            <h1 style={{ fontSize: '24px', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
-              Shorten & Route Intelligence
-            </h1>
-            <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
-              High-concurrency URL platform powered by Go Redirection Engine & PostgreSQL.
-            </p>
-          </div>
+        <div>
+          <h1 style={{ fontSize: '20px', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
+            Overview & Link Intelligence
+          </h1>
+          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
+            Production short links, traffic analytics, and Go redirection performance.
+          </p>
+        </div>
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button
+            onClick={() => onSelectTab('services')}
+            style={{
+              padding: '8px 14px',
+              borderRadius: 'var(--radius-md)',
+              backgroundColor: 'var(--color-bg-elevated)',
+              color: 'var(--color-text-secondary)',
+              fontSize: '12.5px',
+              fontWeight: 500,
+              border: '1px solid var(--color-border-subtle)',
+              cursor: 'pointer',
+            }}
+          >
+            Platform Services
+          </button>
           <button
             onClick={onOpenShortener}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '10px 20px',
+              padding: '9px 18px',
               backgroundColor: 'var(--color-primary)',
-              color: 'white',
-              borderRadius: '8px',
+              color: '#FFFFFF',
+              borderRadius: 'var(--radius-md)',
               fontSize: '13px',
-              fontWeight: 600,
-              boxShadow: '0 4px 14px rgba(59, 130, 246, 0.35)',
+              fontWeight: 500,
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'background-color var(--transition-fast)',
             }}
           >
-            <IconZap size={16} /> Advanced Shortener
+            <IconZap size={15} /> Create Short Link
           </button>
         </div>
       </div>
@@ -117,21 +131,21 @@ export const DashboardView = ({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
           gap: '16px',
         }}
       >
-        <BentoCard withAccent>
+        <BentoCard>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: '13px', color: 'var(--color-text-muted)', fontWeight: 500 }}>
               Total Links
             </span>
-            <div style={{ color: 'var(--color-primary-light)' }}>
-              <IconLink size={18} />
+            <div style={{ color: 'var(--color-primary)' }}>
+              <IconLink size={17} />
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '12px' }}>
-            <span style={{ fontSize: '28px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+            <span style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', letterSpacing: '-0.02em' }}>
               {totalLinks}
             </span>
             <Badge variant="success" size="sm">+12%</Badge>
@@ -141,58 +155,58 @@ export const DashboardView = ({
           </span>
         </BentoCard>
 
-        <BentoCard withAccent>
+        <BentoCard>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: '13px', color: 'var(--color-text-muted)', fontWeight: 500 }}>
               Total Clicks
             </span>
-            <div style={{ color: 'var(--color-secondary)' }}>
-              <IconBarChart size={18} />
+            <div style={{ color: 'var(--color-primary)' }}>
+              <IconBarChart size={17} />
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '12px' }}>
-            <span style={{ fontSize: '28px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+            <span style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', letterSpacing: '-0.02em' }}>
               {totalClicks.toLocaleString()}
             </span>
             <Badge variant="success" size="sm">+28.4%</Badge>
           </div>
           <span style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '6px' }}>
-            Sub-millisecond resolution
+            Real-time redirect events
           </span>
         </BentoCard>
 
-        <BentoCard withAccent>
+        <BentoCard>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: '13px', color: 'var(--color-text-muted)', fontWeight: 500 }}>
               Unique Visitors
             </span>
-            <div style={{ color: '#8B5CF6' }}>
-              <IconUsers size={18} />
+            <div style={{ color: 'var(--color-text-secondary)' }}>
+              <IconUsers size={17} />
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '12px' }}>
-            <span style={{ fontSize: '28px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+            <span style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', letterSpacing: '-0.02em' }}>
               {totalUnique.toLocaleString()}
             </span>
-            <Badge variant="purple" size="sm">78% Ratio</Badge>
+            <Badge variant="info" size="sm">78% Ratio</Badge>
           </div>
           <span style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '6px' }}>
-            SHA-256 privacy hashed
+            Privacy-safe hashed IP
           </span>
         </BentoCard>
 
-        <BentoCard withAccent>
+        <BentoCard>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: '13px', color: 'var(--color-text-muted)', fontWeight: 500 }}>
-              Go Engine Health
+              Gateway Latency
             </span>
-            <Badge variant="success" dot size="sm">Healthy</Badge>
+            <Badge variant="success" dot size="sm">Active</Badge>
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '12px' }}>
-            <span style={{ fontSize: '28px', fontWeight: 700, color: '#10B981' }}>
+            <span style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-status-success)', letterSpacing: '-0.02em' }}>
               0.8 ms
             </span>
-            <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>avg latency</span>
+            <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Go runtime</span>
           </div>
           <span style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '6px' }}>
             Async click pipeline active
@@ -204,29 +218,29 @@ export const DashboardView = ({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+          gap: '16px',
         }}
       >
         {/* Trend Area Chart */}
         <BentoCard
           title="Click Velocity & Traffic Trends"
-          subtitle="Real-time click traffic across all links (Last 7 Days)"
-          icon={<IconBarChart size={18} color="var(--color-primary-light)" />}
+          subtitle="Real-time redirect traffic over the last 7 days"
+          icon={<IconBarChart size={17} color="var(--color-primary)" />}
           action={
             <button
               onClick={() => onSelectTab('analytics')}
               style={{
                 background: 'transparent',
-                color: 'var(--color-primary-light)',
+                color: 'var(--color-primary)',
                 fontSize: '12.5px',
-                fontWeight: 600,
+                fontWeight: 500,
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
               }}
             >
-              Full Analytics <IconArrowUpRight size={14} />
+              Full Analytics <IconArrowUpRight size={13} />
             </button>
           }
         >
@@ -236,21 +250,21 @@ export const DashboardView = ({
               style={{ width: '100%', height: '100%', overflow: 'visible' }}
             >
               <defs>
-                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.4" />
+                <linearGradient id="museChartGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.3" />
                   <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.0" />
                 </linearGradient>
               </defs>
 
               {/* Area fill */}
-              <polygon points={areaString} fill="url(#chartGradient)" />
+              <polygon points={areaString} fill="url(#museChartGradient)" />
 
               {/* Line stroke */}
               <polyline
                 points={pointsString}
                 fill="none"
                 stroke="var(--color-primary)"
-                strokeWidth="2.5"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -264,8 +278,8 @@ export const DashboardView = ({
                     <circle
                       cx={x}
                       cy={y}
-                      r="4"
-                      fill="var(--color-bg-card)"
+                      r="3.5"
+                      fill="var(--color-bg-paper)"
                       stroke="var(--color-primary)"
                       strokeWidth="2"
                     />
@@ -289,25 +303,25 @@ export const DashboardView = ({
         <BentoCard
           title="Top Performing Links"
           subtitle="Highest engagement shortened URLs"
-          icon={<IconZap size={18} color="var(--color-secondary)" />}
+          icon={<IconZap size={17} color="var(--color-primary)" />}
           action={
             <button
               onClick={() => onSelectTab('links')}
               style={{
                 background: 'transparent',
-                color: 'var(--color-primary-light)',
+                color: 'var(--color-primary)',
                 fontSize: '12.5px',
-                fontWeight: 600,
+                fontWeight: 500,
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
               }}
             >
-              Manage All <IconArrowUpRight size={14} />
+              Manage All <IconArrowUpRight size={13} />
             </button>
           }
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {topLinks.map((link) => {
               const fullShort = `https://${link.customDomain || 'short.io'}/${link.shortCode}`;
               const isCopied = copiedId === link.id;
@@ -316,7 +330,7 @@ export const DashboardView = ({
                 <div
                   key={link.id}
                   style={{
-                    padding: '12px',
+                    padding: '10px 12px',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--color-bg-elevated)',
                     border: '1px solid var(--color-border-subtle)',
@@ -324,16 +338,16 @@ export const DashboardView = ({
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     gap: '12px',
-                    transition: 'border-color 0.2s',
+                    transition: 'border-color var(--transition-fast)',
                   }}
                 >
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                         {link.title || link.shortCode}
                       </span>
                       {link.isPasswordProtected && (
-                        <IconLock size={12} color="var(--color-secondary)" />
+                        <IconLock size={12} color="var(--color-text-muted)" />
                       )}
                       {!link.isActive && <Badge variant="error" size="sm">Inactive</Badge>}
                     </div>
@@ -341,7 +355,7 @@ export const DashboardView = ({
                       style={{
                         fontSize: '12px',
                         fontFamily: 'var(--font-code)',
-                        color: 'var(--color-primary-light)',
+                        color: 'var(--color-primary)',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
@@ -351,12 +365,12 @@ export const DashboardView = ({
                     </span>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+                      <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                         {link.clicks.toLocaleString()}
                       </span>
-                      <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>clicks</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--color-text-muted)' }}>clicks</div>
                     </div>
 
                     <button
@@ -364,9 +378,9 @@ export const DashboardView = ({
                       title="Copy short URL"
                       style={{
                         background: 'transparent',
-                        color: isCopied ? '#10B981' : 'var(--color-text-secondary)',
-                        padding: '6px',
-                        borderRadius: '6px',
+                        color: isCopied ? 'var(--color-status-success)' : 'var(--color-text-muted)',
+                        padding: '5px',
+                        borderRadius: 'var(--radius-sm)',
                         border: '1px solid var(--color-border-subtle)',
                       }}
                     >
@@ -384,30 +398,30 @@ export const DashboardView = ({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '16px',
         }}
       >
         {/* Referrers */}
         <BentoCard
           title="Traffic Channels"
-          subtitle="Top referrers leading to redirects"
-          icon={<IconGlobe size={18} color="#10B981" />}
+          subtitle="Top sources directing traffic to short links"
+          icon={<IconGlobe size={17} color="var(--color-primary)" />}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {analytics?.referrers?.map((r, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px' }}>
                   <span style={{ color: 'var(--color-text-primary)', fontWeight: 500 }}>{r.source}</span>
                   <span style={{ color: 'var(--color-text-muted)' }}>{r.count.toLocaleString()} ({r.percentage}%)</span>
                 </div>
                 {/* Progress bar */}
                 <div
                   style={{
-                    height: '6px',
+                    height: '5px',
                     width: '100%',
                     backgroundColor: 'var(--color-bg-elevated)',
-                    borderRadius: '3px',
+                    borderRadius: 'var(--radius-full)',
                     overflow: 'hidden',
                   }}
                 >
@@ -416,7 +430,7 @@ export const DashboardView = ({
                       height: '100%',
                       width: `${r.percentage}%`,
                       backgroundColor: 'var(--color-primary)',
-                      borderRadius: '3px',
+                      borderRadius: 'var(--radius-full)',
                     }}
                   />
                 </div>
@@ -428,27 +442,27 @@ export const DashboardView = ({
         {/* Device Breakdown */}
         <BentoCard
           title="Device Categorization"
-          subtitle="User-Agent parsed client platforms"
-          icon={<IconUsers size={18} color="#F59E0B" />}
+          subtitle="Client browser and platform distribution"
+          icon={<IconUsers size={17} color="var(--color-text-secondary)" />}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {analytics?.devices?.map((d, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span
                     style={{
-                      width: '10px',
-                      height: '10px',
+                      width: '8px',
+                      height: '8px',
                       borderRadius: '50%',
-                      backgroundColor: i === 0 ? 'var(--color-primary)' : i === 1 ? 'var(--color-secondary)' : '#8B5CF6',
+                      backgroundColor: i === 0 ? 'var(--color-primary)' : 'var(--color-text-muted)',
                     }}
                   />
-                  <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-primary)' }}>
+                  <span style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-primary)' }}>
                     {d.type}
                   </span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                  <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                     {d.count.toLocaleString()}
                   </span>
                   <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
@@ -465,4 +479,3 @@ export const DashboardView = ({
 };
 
 export default DashboardView;
-

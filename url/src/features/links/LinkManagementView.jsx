@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import BentoCard from '../../components/common/BentoCard';
 import Badge from '../../components/common/Badge';
 import Modal from '../../components/common/Modal';
 import CustomQR from '../../components/common/CustomQR';
@@ -12,28 +11,23 @@ import {
   IconTrash,
   IconEdit,
   IconSearch,
-  IconFilter,
   IconLock,
-  IconCalendar,
   IconBarChart,
-  IconTag,
   IconFolder,
 } from '../../components/common/Icons';
 
 export const LinkManagementView = ({
   links = [],
   folders = [],
-  domains = [],
   onUpdateLink,
   onDeleteLink,
-  onToggleActive,
   onOpenShortener,
   onViewAnalytics,
 }) => {
   const [search, setSearch] = useState('');
-  const [filterStatus, setFilterStatus] = useState('all'); // all, active, inactive, protected
+  const [filterStatus, setFilterStatus] = useState('all');
   const [filterFolder, setFilterFolder] = useState('all');
-  const [sortBy, setSortBy] = useState('newest'); // newest, oldest, clicks
+  const [sortBy, setSortBy] = useState('newest');
   const [selectedIds, setSelectedIds] = useState([]);
   const [copiedId, setCopiedId] = useState(null);
 
@@ -123,15 +117,15 @@ export const LinkManagementView = ({
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
       {/* Title & Action Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
         <div>
-          <h1 style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+          <h1 style={{ fontSize: '20px', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
             Link Management
           </h1>
           <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
-            {filteredLinks.length} total links found in workspace
+            {filteredLinks.length} total links in workspace
           </p>
         </div>
 
@@ -141,15 +135,17 @@ export const LinkManagementView = ({
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '9px 18px',
+            padding: '8px 16px',
             backgroundColor: 'var(--color-primary)',
-            color: 'white',
-            borderRadius: '8px',
+            color: '#FFFFFF',
+            borderRadius: 'var(--radius-md)',
             fontSize: '13px',
-            fontWeight: 600,
+            fontWeight: 500,
+            border: 'none',
+            transition: 'background-color var(--transition-fast)',
           }}
         >
-          <IconLink size={16} /> Shorten New URL
+          <IconLink size={15} /> Shorten New URL
         </button>
       </div>
 
@@ -158,29 +154,30 @@ export const LinkManagementView = ({
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '12px',
+          gap: '10px',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '16px',
-          borderRadius: 'var(--radius-md)',
-          backgroundColor: 'var(--color-bg-card)',
+          padding: '14px 16px',
+          borderRadius: 'var(--radius-xl)',
+          backgroundColor: 'var(--color-bg-paper)',
           border: '1px solid var(--color-border-subtle)',
+          boxShadow: 'var(--shadow-card)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: '240px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, minWidth: '240px' }}>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
               backgroundColor: 'var(--color-bg-elevated)',
-              padding: '8px 12px',
-              borderRadius: '8px',
+              padding: '7px 12px',
+              borderRadius: 'var(--radius-md)',
               border: '1px solid var(--color-border-subtle)',
               flex: 1,
             }}
           >
-            <IconSearch size={16} color="var(--color-text-muted)" />
+            <IconSearch size={15} color="var(--color-text-muted)" />
             <input
               type="text"
               placeholder="Search links, aliases or tags..."
@@ -197,18 +194,18 @@ export const LinkManagementView = ({
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           {/* Status Filter */}
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
             style={{
-              padding: '8px 12px',
+              padding: '7px 12px',
               backgroundColor: 'var(--color-bg-elevated)',
               border: '1px solid var(--color-border-subtle)',
-              borderRadius: '8px',
+              borderRadius: 'var(--radius-md)',
               color: 'var(--color-text-primary)',
-              fontSize: '13px',
+              fontSize: '12.5px',
             }}
           >
             <option value="all">All Status</option>
@@ -222,12 +219,12 @@ export const LinkManagementView = ({
             value={filterFolder}
             onChange={(e) => setFilterFolder(e.target.value)}
             style={{
-              padding: '8px 12px',
+              padding: '7px 12px',
               backgroundColor: 'var(--color-bg-elevated)',
               border: '1px solid var(--color-border-subtle)',
-              borderRadius: '8px',
+              borderRadius: 'var(--radius-md)',
               color: 'var(--color-text-primary)',
-              fontSize: '13px',
+              fontSize: '12.5px',
             }}
           >
             <option value="all">All Folders</option>
@@ -243,12 +240,12 @@ export const LinkManagementView = ({
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
-              padding: '8px 12px',
+              padding: '7px 12px',
               backgroundColor: 'var(--color-bg-elevated)',
               border: '1px solid var(--color-border-subtle)',
-              borderRadius: '8px',
+              borderRadius: 'var(--radius-md)',
               color: 'var(--color-text-primary)',
-              fontSize: '13px',
+              fontSize: '12.5px',
             }}
           >
             <option value="newest">Newest First</option>
@@ -263,15 +260,15 @@ export const LinkManagementView = ({
         <div
           style={{
             padding: '10px 16px',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            borderRadius: '8px',
+            backgroundColor: 'var(--color-bg-paper)',
+            border: '1px solid var(--color-primary)',
+            borderRadius: 'var(--radius-md)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
         >
-          <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-primary-light)' }}>
+          <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-primary)' }}>
             {selectedIds.length} links selected
           </span>
           <button
@@ -280,25 +277,25 @@ export const LinkManagementView = ({
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '6px 12px',
-              backgroundColor: 'rgba(239, 68, 68, 0.15)',
-              color: '#EF4444',
-              borderRadius: '6px',
+              padding: '5px 12px',
+              backgroundColor: 'rgba(242, 0, 57, 0.12)',
+              color: 'var(--color-status-error)',
+              borderRadius: 'var(--radius-sm)',
               fontSize: '12px',
-              fontWeight: 600,
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              fontWeight: 500,
+              border: '1px solid rgba(242, 0, 57, 0.25)',
             }}
           >
-            <IconTrash size={14} /> Bulk Delete
+            <IconTrash size={14} /> Delete Selected
           </button>
         </div>
       )}
 
-      {/* Modern DataGrid / Table */}
+      {/* DataGrid Table in Muse.ai Card Style */}
       <div
         style={{
           backgroundColor: 'var(--color-bg-card)',
-          borderRadius: 'var(--radius-lg)',
+          borderRadius: 'var(--radius-xl)',
           border: '1px solid var(--color-border-subtle)',
           boxShadow: 'var(--shadow-card)',
           overflow: 'hidden',
@@ -310,33 +307,34 @@ export const LinkManagementView = ({
               <tr
                 style={{
                   borderBottom: '1px solid var(--color-border-subtle)',
-                  backgroundColor: 'var(--color-bg-elevated)',
+                  backgroundColor: 'var(--color-bg-surface)',
                   color: 'var(--color-text-muted)',
-                  fontSize: '12px',
+                  fontSize: '11px',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.04em',
+                  letterSpacing: '0.06em',
+                  fontWeight: 600,
                 }}
               >
-                <th style={{ padding: '14px 16px', width: '40px' }}>
+                <th style={{ padding: '12px 16px', width: '36px' }}>
                   <input
                     type="checkbox"
                     checked={selectedIds.length > 0 && selectedIds.length === filteredLinks.length}
                     onChange={handleSelectAll}
                   />
                 </th>
-                <th style={{ padding: '14px 16px' }}>Short Link & Destination</th>
-                <th style={{ padding: '14px 16px' }}>Folder & Tags</th>
-                <th style={{ padding: '14px 16px' }}>Clicks</th>
-                <th style={{ padding: '14px 16px' }}>Status</th>
-                <th style={{ padding: '14px 16px' }}>Created</th>
-                <th style={{ padding: '14px 16px', textAlign: 'right' }}>Actions</th>
+                <th style={{ padding: '12px 16px' }}>Short Link & Destination</th>
+                <th style={{ padding: '12px 16px' }}>Folder & Tags</th>
+                <th style={{ padding: '12px 16px' }}>Clicks</th>
+                <th style={{ padding: '12px 16px' }}>Status</th>
+                <th style={{ padding: '12px 16px' }}>Created</th>
+                <th style={{ padding: '12px 16px', textAlign: 'right' }}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredLinks.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ padding: '48px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-                    No shortened links match the selected filters.
+                  <td colSpan="7" style={{ padding: '40px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+                    No shortened links found.
                   </td>
                 </tr>
               ) : (
@@ -353,11 +351,11 @@ export const LinkManagementView = ({
                       style={{
                         borderBottom: '1px solid var(--color-border-subtle)',
                         backgroundColor: isSelected ? 'var(--color-bg-hover)' : 'transparent',
-                        transition: 'background-color 0.15s',
+                        transition: 'background-color var(--transition-fast)',
                       }}
                     >
                       {/* Checkbox */}
-                      <td style={{ padding: '14px 16px' }}>
+                      <td style={{ padding: '12px 16px' }}>
                         <input
                           type="checkbox"
                           checked={isSelected}
@@ -366,15 +364,15 @@ export const LinkManagementView = ({
                       </td>
 
                       {/* Title & URLs */}
-                      <td style={{ padding: '14px 16px', maxWidth: '320px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <td style={{ padding: '12px 16px', maxWidth: '320px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <span style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>
                               {link.title || link.shortCode}
                             </span>
                             {link.isPasswordProtected && (
                               <span title="Password Protected">
-                                <IconLock size={13} color="var(--color-secondary)" />
+                                <IconLock size={12} color="var(--color-text-muted)" />
                               </span>
                             )}
                           </div>
@@ -383,9 +381,9 @@ export const LinkManagementView = ({
                             <span
                               style={{
                                 fontFamily: 'var(--font-code)',
-                                color: 'var(--color-primary-light)',
-                                fontWeight: 600,
-                                fontSize: '12.5px',
+                                color: 'var(--color-primary)',
+                                fontWeight: 500,
+                                fontSize: '12px',
                               }}
                             >
                               {fullShort}
@@ -394,7 +392,7 @@ export const LinkManagementView = ({
                               onClick={() => copyUrl(link)}
                               style={{
                                 background: 'transparent',
-                                color: isCopied ? '#10B981' : 'var(--color-text-muted)',
+                                color: isCopied ? 'var(--color-status-success)' : 'var(--color-text-muted)',
                                 padding: '2px',
                               }}
                               title="Copy URL"
@@ -408,7 +406,7 @@ export const LinkManagementView = ({
                             target="_blank"
                             rel="noreferrer"
                             style={{
-                              fontSize: '11.5px',
+                              fontSize: '11px',
                               color: 'var(--color-text-muted)',
                               overflow: 'hidden',
                               textOverflow: 'ellipsis',
@@ -424,11 +422,11 @@ export const LinkManagementView = ({
                       </td>
 
                       {/* Folder & Tags */}
-                      <td style={{ padding: '14px 16px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <td style={{ padding: '12px 16px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                           {folder ? (
-                            <span style={{ fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px', color: folder.color || 'inherit' }}>
-                              <IconFolder size={13} /> {folder.name}
+                            <span style={{ fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-text-secondary)' }}>
+                              <IconFolder size={12} /> {folder.name}
                             </span>
                           ) : (
                             <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>—</span>
@@ -447,9 +445,9 @@ export const LinkManagementView = ({
                       </td>
 
                       {/* Clicks */}
-                      <td style={{ padding: '14px 16px' }}>
+                      <td style={{ padding: '12px 16px' }}>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '14px' }}>
+                          <span style={{ fontWeight: 600, color: 'var(--color-text-primary)', fontSize: '13.5px' }}>
                             {link.clicks.toLocaleString()}
                           </span>
                           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
@@ -459,7 +457,7 @@ export const LinkManagementView = ({
                       </td>
 
                       {/* Status */}
-                      <td style={{ padding: '14px 16px' }}>
+                      <td style={{ padding: '12px 16px' }}>
                         {isExpired ? (
                           <Badge variant="warning" dot size="sm">Expired</Badge>
                         ) : link.isActive ? (
@@ -470,24 +468,24 @@ export const LinkManagementView = ({
                       </td>
 
                       {/* Created */}
-                      <td style={{ padding: '14px 16px', color: 'var(--color-text-muted)', fontSize: '12px' }}>
+                      <td style={{ padding: '12px 16px', color: 'var(--color-text-muted)', fontSize: '12px' }}>
                         {new Date(link.createdAt).toLocaleDateString()}
                       </td>
 
                       {/* Action buttons */}
-                      <td style={{ padding: '14px 16px', textAlign: 'right' }}>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <td style={{ padding: '12px 16px', textAlign: 'right' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                           <button
                             onClick={() => setQrModalLink(link)}
                             title="QR Code"
                             style={{
                               background: 'transparent',
                               color: 'var(--color-text-secondary)',
-                              padding: '6px',
-                              borderRadius: '6px',
+                              padding: '5px',
+                              borderRadius: 'var(--radius-sm)',
                             }}
                           >
-                            <IconQrCode size={15} />
+                            <IconQrCode size={14} />
                           </button>
 
                           <button
@@ -496,11 +494,11 @@ export const LinkManagementView = ({
                             style={{
                               background: 'transparent',
                               color: 'var(--color-text-secondary)',
-                              padding: '6px',
-                              borderRadius: '6px',
+                              padding: '5px',
+                              borderRadius: 'var(--radius-sm)',
                             }}
                           >
-                            <IconBarChart size={15} />
+                            <IconBarChart size={14} />
                           </button>
 
                           <button
@@ -509,11 +507,11 @@ export const LinkManagementView = ({
                             style={{
                               background: 'transparent',
                               color: 'var(--color-text-secondary)',
-                              padding: '6px',
-                              borderRadius: '6px',
+                              padding: '5px',
+                              borderRadius: 'var(--radius-sm)',
                             }}
                           >
-                            <IconEdit size={15} />
+                            <IconEdit size={14} />
                           </button>
 
                           <button
@@ -521,12 +519,12 @@ export const LinkManagementView = ({
                             title="Delete Link"
                             style={{
                               background: 'transparent',
-                              color: '#EF4444',
-                              padding: '6px',
-                              borderRadius: '6px',
+                              color: 'var(--color-status-error)',
+                              padding: '5px',
+                              borderRadius: 'var(--radius-sm)',
                             }}
                           >
-                            <IconTrash size={15} />
+                            <IconTrash size={14} />
                           </button>
                         </div>
                       </td>
@@ -546,9 +544,9 @@ export const LinkManagementView = ({
           onClose={() => setEditingLink(null)}
           title="Edit Short Link"
         >
-          <form onSubmit={saveEdit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+          <form onSubmit={saveEdit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Title
               </label>
               <input
@@ -556,18 +554,18 @@ export const LinkManagementView = ({
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Destination URL
               </label>
               <input
@@ -576,30 +574,30 @@ export const LinkManagementView = ({
                 onChange={(e) => setEditOriginalUrl(e.target.value)}
                 required
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>
                 Folder
               </label>
               <select
                 value={editFolderId}
                 onChange={(e) => setEditFolderId(e.target.value)}
                 style={{
-                  padding: '10px 14px',
+                  padding: '9px 12px',
                   backgroundColor: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border-subtle)',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--radius-md)',
                   color: 'var(--color-text-primary)',
-                  fontSize: '13.5px',
+                  fontSize: '13px',
                 }}
               >
                 <option value="">No Folder</option>
@@ -611,17 +609,17 @@ export const LinkManagementView = ({
               </select>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '8px' }}>
               <button
                 type="button"
                 onClick={() => setEditingLink(null)}
                 style={{
-                  padding: '10px 16px',
-                  borderRadius: '8px',
+                  padding: '8px 14px',
+                  borderRadius: 'var(--radius-md)',
                   backgroundColor: 'transparent',
                   color: 'var(--color-text-secondary)',
                   border: '1px solid var(--color-border-subtle)',
-                  fontSize: '13px',
+                  fontSize: '12.5px',
                 }}
               >
                 Cancel
@@ -629,12 +627,13 @@ export const LinkManagementView = ({
               <button
                 type="submit"
                 style={{
-                  padding: '10px 20px',
-                  borderRadius: '8px',
+                  padding: '8px 18px',
+                  borderRadius: 'var(--radius-md)',
                   backgroundColor: 'var(--color-primary)',
-                  color: 'white',
-                  fontSize: '13px',
-                  fontWeight: 600,
+                  color: '#FFFFFF',
+                  fontSize: '12.5px',
+                  fontWeight: 500,
+                  border: 'none',
                 }}
               >
                 Save Changes
@@ -651,14 +650,15 @@ export const LinkManagementView = ({
           onClose={() => setQrModalLink(null)}
           title={`QR Code: ${qrModalLink.shortCode}`}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-            <span style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>
-              Scan to route directly to {qrModalLink.originalUrl}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
+            <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>
+              Scan to route directly to destination
             </span>
             <CustomQR
               value={`https://${qrModalLink.customDomain || 'short.io'}/${qrModalLink.shortCode}`}
-              size={220}
-              fgColor="#3B82F6"
+              size={200}
+              fgColor="var(--color-primary)"
+              bgColor="var(--color-bg-paper)"
             />
           </div>
         </Modal>
@@ -668,4 +668,3 @@ export const LinkManagementView = ({
 };
 
 export default LinkManagementView;
-

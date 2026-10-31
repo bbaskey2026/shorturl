@@ -4,11 +4,6 @@ import Badge from '../../components/common/Badge';
 import {
   IconShield,
   IconUsers,
-  IconLink,
-  IconGlobe,
-  IconBarChart,
-  IconTrash,
-  IconLock,
 } from '../../components/common/Icons';
 
 export const AdminDashboardView = ({ links = [], domains = [] }) => {
@@ -26,86 +21,86 @@ export const AdminDashboardView = ({ links = [], domains = [] }) => {
   ]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <h1 style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+            <h1 style={{ fontSize: '20px', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
               Platform Administration & Audit
             </h1>
-            <Badge variant="purple" size="sm">SuperAdmin</Badge>
+            <Badge variant="info" size="sm">Staff Access</Badge>
           </div>
           <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
-            System-wide user control, security audit logs, domain whitelisting, and routing health.
+            System-wide user controls, audit logs, domain whitelisting, and routing telemetry.
           </p>
         </div>
       </div>
 
       {/* Platform KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Registered Tenants</span>
-          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '6px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Registered Tenants</span>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '6px', letterSpacing: '-0.02em' }}>
             {platformUsers.length}
           </div>
-          <span style={{ fontSize: '11px', color: '#10B981', marginTop: '4px' }}>100% database health</span>
+          <span style={{ fontSize: '11px', color: 'var(--color-status-success)', marginTop: '4px' }}>100% database health</span>
         </BentoCard>
 
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Active Short Codes</span>
-          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '6px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Active Short Codes</span>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '6px', letterSpacing: '-0.02em' }}>
             {links.length}
           </div>
-          <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '4px' }}>Across all tenants</span>
+          <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '4px' }}>Across all workspaces</span>
         </BentoCard>
 
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Custom Domains</span>
-          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-primary-light)', marginTop: '6px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Custom Domains</span>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-primary)', marginTop: '6px', letterSpacing: '-0.02em' }}>
             {domains.length}
           </div>
           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '4px' }}>DNS TXT verified</span>
         </BentoCard>
 
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Security Incidents</span>
-          <div style={{ fontSize: '26px', fontWeight: 700, color: '#10B981', marginTop: '6px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Security Incidents</span>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-status-success)', marginTop: '6px', letterSpacing: '-0.02em' }}>
             0
           </div>
-          <span style={{ fontSize: '11px', color: '#10B981', marginTop: '4px' }}>SSRF & Open-Redirect Safe</span>
+          <span style={{ fontSize: '11px', color: 'var(--color-status-success)', marginTop: '4px' }}>SSRF & Open-Redirect Safe</span>
         </BentoCard>
       </div>
 
       {/* Users Management */}
-      <BentoCard title="User Accounts" subtitle="Manage tenant roles, quotas, and access control" icon={<IconUsers size={18} color="var(--color-primary-light)" />}>
+      <BentoCard title="User Accounts" subtitle="Manage tenant roles, quotas, and access permissions" icon={<IconUsers size={17} color="var(--color-primary)" />}>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '12.5px' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid var(--color-border-subtle)', color: 'var(--color-text-muted)' }}>
-                <th style={{ padding: '10px 14px' }}>User</th>
-                <th style={{ padding: '10px 14px' }}>Role</th>
-                <th style={{ padding: '10px 14px' }}>Plan</th>
-                <th style={{ padding: '10px 14px' }}>Links</th>
-                <th style={{ padding: '10px 14px' }}>Status</th>
+              <tr style={{ borderBottom: '1px solid var(--color-border-subtle)', color: 'var(--color-text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <th style={{ padding: '10px 12px' }}>User</th>
+                <th style={{ padding: '10px 12px' }}>Role</th>
+                <th style={{ padding: '10px 12px' }}>Plan</th>
+                <th style={{ padding: '10px 12px' }}>Links</th>
+                <th style={{ padding: '10px 12px' }}>Status</th>
               </tr>
             </thead>
             <tbody>
               {platformUsers.map((u) => (
                 <tr key={u.id} style={{ borderBottom: '1px solid var(--color-border-subtle)' }}>
-                  <td style={{ padding: '12px 14px' }}>
+                  <td style={{ padding: '10px 12px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <span style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>{u.name}</span>
                       <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>{u.email}</span>
                     </div>
                   </td>
-                  <td style={{ padding: '12px 14px' }}>
-                    <Badge variant={u.role === 'admin' ? 'purple' : 'neutral'} size="sm">
+                  <td style={{ padding: '10px 12px' }}>
+                    <Badge variant={u.role === 'admin' ? 'info' : 'neutral'} size="sm">
                       {u.role.toUpperCase()}
                     </Badge>
                   </td>
-                  <td style={{ padding: '12px 14px', textTransform: 'capitalize' }}>{u.plan}</td>
-                  <td style={{ padding: '12px 14px', fontWeight: 600 }}>{u.linksCount}</td>
-                  <td style={{ padding: '12px 14px' }}>
+                  <td style={{ padding: '10px 12px', textTransform: 'capitalize' }}>{u.plan}</td>
+                  <td style={{ padding: '10px 12px', fontWeight: 600 }}>{u.linksCount}</td>
+                  <td style={{ padding: '10px 12px' }}>
                     {u.status === 'active' ? (
                       <Badge variant="success" dot size="sm">Active</Badge>
                     ) : (
@@ -120,8 +115,8 @@ export const AdminDashboardView = ({ links = [], domains = [] }) => {
       </BentoCard>
 
       {/* Audit Logs */}
-      <BentoCard title="Security & Audit Trail" subtitle="Chronological system and moderator activity" icon={<IconShield size={18} color="#10B981" />}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <BentoCard title="Security & Audit Trail" subtitle="Chronological system and moderator activity" icon={<IconShield size={17} color="var(--color-primary)" />}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {auditLogs.map((log) => (
             <div
               key={log.id}
@@ -129,19 +124,19 @@ export const AdminDashboardView = ({ links = [], domains = [] }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '10px 14px',
-                borderRadius: '8px',
+                padding: '9px 12px',
+                borderRadius: 'var(--radius-md)',
                 backgroundColor: 'var(--color-bg-elevated)',
                 border: '1px solid var(--color-border-subtle)',
-                fontSize: '12.5px',
+                fontSize: '12px',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span
                   style={{
                     fontFamily: 'var(--font-code)',
-                    fontWeight: 600,
-                    color: log.status === 'WARNING' ? '#F59E0B' : 'var(--color-primary-light)',
+                    fontWeight: 500,
+                    color: log.status === 'WARNING' ? 'var(--color-status-warning)' : 'var(--color-primary)',
                   }}
                 >
                   {log.action}
@@ -149,7 +144,7 @@ export const AdminDashboardView = ({ links = [], domains = [] }) => {
                 <span style={{ color: 'var(--color-text-primary)' }}>Target: {log.target}</span>
                 <span style={{ color: 'var(--color-text-muted)' }}>by {log.user}</span>
               </div>
-              <span style={{ color: 'var(--color-text-muted)', fontSize: '11.5px' }}>{log.time}</span>
+              <span style={{ color: 'var(--color-text-muted)', fontSize: '11px' }}>{log.time}</span>
             </div>
           ))}
         </div>
@@ -159,4 +154,3 @@ export const AdminDashboardView = ({ links = [], domains = [] }) => {
 };
 
 export default AdminDashboardView;
-

@@ -8,8 +8,8 @@ import { IconDownload } from './Icons';
 export const CustomQR = ({
   value = 'https://short.io/demo',
   size = 200,
-  fgColor = '#3B82F6',
-  bgColor = '#151824',
+  fgColor = '#0074E4',
+  bgColor = '#252628',
   includeMargin = true,
   className = '',
 }) => {

@@ -5,18 +5,15 @@ import {
   IconBarChart,
   IconUsers,
   IconGlobe,
-  IconCalendar,
-  IconLink,
-  IconZap,
 } from '../../components/common/Icons';
 
-export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSelectedLink }) => {
-  const [timeRange, setTimeRange] = useState('7d'); // today, 7d, 30d, 90d
+export const AnalyticsView = ({ analytics, selectedLink, onClearSelectedLink }) => {
+  const [timeRange, setTimeRange] = useState('7d');
 
   const data = analytics || {};
   const clickPoints = data.clicksByDay || [];
   const maxClicks = Math.max(...clickPoints.map((p) => p.clicks), 1);
-  const chartHeight = 200;
+  const chartHeight = 180;
   const chartWidth = 600;
   const stepX = chartWidth / (Math.max(clickPoints.length - 1, 1));
 
@@ -31,12 +28,12 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
   const areaString = `${pointsString} ${chartWidth},${chartHeight} 0,${chartHeight}`;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Header and Filter bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <h1 style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+            <h1 style={{ fontSize: '20px', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
               Analytics & Traffic Telemetry
             </h1>
             {selectedLink && (
@@ -46,18 +43,18 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
             )}
           </div>
           <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
-            High-precision click tracking recorded asynchronously by the Go redirection worker.
+            High-precision click telemetry recorded asynchronously by the Go redirection worker.
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {selectedLink && (
             <button
               onClick={onClearSelectedLink}
               style={{
                 padding: '6px 12px',
-                borderRadius: '6px',
-                backgroundColor: 'var(--color-bg-hover)',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: 'transparent',
                 color: 'var(--color-text-secondary)',
                 fontSize: '12px',
                 border: '1px solid var(--color-border-subtle)',
@@ -72,14 +69,14 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
               key={range}
               onClick={() => setTimeRange(range)}
               style={{
-                padding: '7px 14px',
-                borderRadius: '8px',
-                backgroundColor: timeRange === range ? 'var(--color-primary)' : 'var(--color-bg-card)',
-                color: timeRange === range ? 'white' : 'var(--color-text-secondary)',
-                border: '1px solid var(--color-border-subtle)',
-                fontSize: '12.5px',
-                fontWeight: 600,
-                transition: 'all 0.15s',
+                padding: '6px 12px',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: timeRange === range ? 'var(--color-primary)' : 'var(--color-bg-paper)',
+                color: timeRange === range ? '#FFFFFF' : 'var(--color-text-secondary)',
+                border: `1px solid ${timeRange === range ? 'var(--color-primary)' : 'var(--color-border-subtle)'}`,
+                fontSize: '12px',
+                fontWeight: 500,
+                transition: 'all var(--transition-fast)',
               }}
             >
               {range === 'today' ? 'Today' : range === '7d' ? '7 Days' : range === '30d' ? '30 Days' : '90 Days'}
@@ -91,26 +88,26 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
       {/* KPI Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Total Redirect Events</span>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '8px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Total Redirect Events</span>
+          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             {(selectedLink ? selectedLink.clicks : data.totalClicks)?.toLocaleString()}
           </div>
-          <span style={{ fontSize: '12px', color: '#10B981', marginTop: '4px' }}>+18.2% vs previous period</span>
+          <span style={{ fontSize: '12px', color: 'var(--color-status-success)', marginTop: '4px' }}>+18.2% vs previous period</span>
         </BentoCard>
 
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Unique Visitors (Hashed)</span>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '8px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Unique Visitors (Hashed)</span>
+          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             {(selectedLink ? selectedLink.uniqueVisitors : data.uniqueVisitors)?.toLocaleString()}
           </div>
           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
-            SHA-256(IP + Salt + Date)
+            SHA-256 privacy compliant
           </span>
         </BentoCard>
 
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Conversion / Engagement</span>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--color-secondary)', marginTop: '8px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Conversion / Engagement</span>
+          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             78.2%
           </div>
           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
@@ -119,12 +116,12 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
         </BentoCard>
 
         <BentoCard>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>Worker Pipeline Latency</span>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: '#10B981', marginTop: '8px' }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', fontWeight: 500 }}>Worker Pipeline Latency</span>
+          <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--color-status-success)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             ~0.8ms
           </div>
           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
-            Non-blocking Redis stream
+            Async Go redirection
           </span>
         </BentoCard>
       </div>
@@ -133,7 +130,7 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
       <BentoCard
         title="Clicks Over Time"
         subtitle="Chronological volume of redirection requests"
-        icon={<IconBarChart size={18} color="var(--color-primary-light)" />}
+        icon={<IconBarChart size={17} color="var(--color-primary)" />}
       >
         <div style={{ width: '100%', height: chartHeight + 40, marginTop: '12px' }}>
           <svg
@@ -142,7 +139,7 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
           >
             <defs>
               <linearGradient id="analyticsGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.4" />
+                <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.3" />
                 <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.0" />
               </linearGradient>
             </defs>
@@ -152,7 +149,9 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
               points={pointsString}
               fill="none"
               stroke="var(--color-primary)"
-              strokeWidth="2.5"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
 
             {clickPoints.map((p, i) => {
@@ -160,7 +159,7 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
               const y = chartHeight - (p.clicks / maxClicks) * (chartHeight - 40) - 20;
               return (
                 <g key={i}>
-                  <circle cx={x} cy={y} r="4" fill="var(--color-bg-card)" stroke="var(--color-primary)" strokeWidth="2" />
+                  <circle cx={x} cy={y} r="3.5" fill="var(--color-bg-paper)" stroke="var(--color-primary)" strokeWidth="2" />
                   <text x={x} y={chartHeight + 20} textAnchor="middle" fill="var(--color-text-muted)" fontSize="11">
                     {p.date}
                   </text>
@@ -172,22 +171,22 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
       </BentoCard>
 
       {/* Geo and Breakdown Bento Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
         {/* Country breakdown */}
         <BentoCard
           title="Geographic Distribution"
-          subtitle="Country origin identified via IP"
-          icon={<IconGlobe size={18} color="#10B981" />}
+          subtitle="Country origin identified via IP telemetry"
+          icon={<IconGlobe size={17} color="var(--color-primary)" />}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {data.countries?.map((c, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px' }}>
                   <span style={{ fontWeight: 500, color: 'var(--color-text-primary)' }}>{c.country}</span>
                   <span style={{ color: 'var(--color-text-muted)' }}>{c.clicks.toLocaleString()} ({c.percentage}%)</span>
                 </div>
-                <div style={{ height: '5px', backgroundColor: 'var(--color-bg-elevated)', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${c.percentage}%`, backgroundColor: 'var(--color-secondary)' }} />
+                <div style={{ height: '5px', backgroundColor: 'var(--color-bg-elevated)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+                  <div style={{ height: '100%', width: `${c.percentage}%`, backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-full)' }} />
                 </div>
               </div>
             ))}
@@ -197,18 +196,18 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
         {/* Browser breakdown */}
         <BentoCard
           title="Client Browsers"
-          subtitle="User-Agent parsed browsers"
-          icon={<IconUsers size={18} color="#8B5CF6" />}
+          subtitle="User-Agent parsed client user software"
+          icon={<IconUsers size={17} color="var(--color-text-secondary)" />}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {data.browsers?.map((b, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#8B5CF6' }} />
-                  <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-primary)' }}>{b.name}</span>
+                  <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: i === 0 ? 'var(--color-primary)' : 'var(--color-text-muted)' }} />
+                  <span style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--color-text-primary)' }}>{b.name}</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                  <span style={{ fontSize: '13.5px', fontWeight: 600 }}>{b.count.toLocaleString()}</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 600 }}>{b.count.toLocaleString()}</span>
                   <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>({b.percentage}%)</span>
                 </div>
               </div>
@@ -221,4 +220,3 @@ export const AnalyticsView = ({ analytics, links = [], selectedLink, onClearSele
 };
 
 export default AnalyticsView;
-

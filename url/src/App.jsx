@@ -9,6 +9,7 @@ import QRCodeStudioView from './features/qrcodes/QRCodeStudioView';
 import FoldersView from './features/folders/FoldersView';
 import SubscriptionView from './features/subscriptions/SubscriptionView';
 import AdminDashboardView from './features/admin/AdminDashboardView';
+import PlatformServicesView from './features/services/PlatformServicesView';
 import LinkShortenerModal from './features/links/LinkShortenerModal';
 import {
   initialLinks,
@@ -173,6 +174,16 @@ export const App = () => {
             onSelectTab={setCurrentTab}
             onToggleLinkActive={handleToggleLinkActive}
             onSelectLinkForAnalytics={handleViewAnalyticsForLink}
+          />
+        )}
+
+        {currentTab === 'services' && (
+          <PlatformServicesView
+            onSelectTab={setCurrentTab}
+            onOpenShortener={() => setIsShortenerOpen(true)}
+            onCreateLink={handleCreateLink}
+            domains={domains}
+            links={links}
           />
         )}
 
