@@ -1,0 +1,142 @@
+// Centralized Design Tokens for Muse.ai-inspired Theme Engine
+export const tokens = {
+  dark: {
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#3B82F6',
+        light: '#60A5FA',
+        dark: '#1D4ED8',
+        contrastText: '#FFFFFF',
+      },
+      secondary: {
+        main: '#06B6D4',
+        light: '#22D3EE',
+        dark: '#0891B2',
+        contrastText: '#FFFFFF',
+      },
+      accent: {
+        purple: '#8B5CF6',
+        emerald: '#10B981',
+        amber: '#F59E0B',
+        rose: '#F43F5E',
+      },
+      background: {
+        default: '#08090D',
+        surface: '#10121A',
+        paper: '#151824',
+        card: '#161A26',
+        elevated: '#1D2232',
+        hover: 'rgba(255, 255, 255, 0.04)',
+        active: 'rgba(255, 255, 255, 0.08)',
+        backdrop: 'rgba(8, 9, 13, 0.85)',
+      },
+      text: {
+        primary: '#F9FAFB',
+        secondary: '#9CA3AF',
+        muted: '#6B7280',
+        disabled: '#4B5563',
+      },
+      border: {
+        subtle: 'rgba(255, 255, 255, 0.07)',
+        medium: 'rgba(255, 255, 255, 0.14)',
+        strong: 'rgba(255, 255, 255, 0.22)',
+        focus: '#3B82F6',
+      },
+      status: {
+        success: '#10B981',
+        successBg: 'rgba(16, 185, 129, 0.12)',
+        warning: '#F59E0B',
+        warningBg: 'rgba(245, 158, 11, 0.12)',
+        error: '#EF4444',
+        errorBg: 'rgba(239, 68, 68, 0.12)',
+        info: '#3B82F6',
+        infoBg: 'rgba(59, 130, 246, 0.12)',
+      },
+    },
+    shadows: {
+      card: '0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06)',
+      cardHover: '0 8px 30px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(59, 130, 246, 0.3)',
+      dropdown: '0 12px 36px 0 rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+      glow: '0 0 24px rgba(59, 130, 246, 0.25)',
+    },
+  },
+  light: {
+    palette: {
+      mode: 'light',
+      primary: {
+        main: '#2563EB',
+        light: '#3B82F6',
+        dark: '#1E40AF',
+        contrastText: '#FFFFFF',
+      },
+      secondary: {
+        main: '#0891B2',
+        light: '#06B6D4',
+        dark: '#0E7490',
+        contrastText: '#FFFFFF',
+      },
+      accent: {
+        purple: '#7C3AED',
+        emerald: '#059669',
+        amber: '#D97706',
+        rose: '#E11D48',
+      },
+      background: {
+        default: '#F8FAFC',
+        surface: '#FFFFFF',
+        paper: '#FFFFFF',
+        card: '#FFFFFF',
+        elevated: '#F1F5F9',
+        hover: 'rgba(0, 0, 0, 0.03)',
+        active: 'rgba(0, 0, 0, 0.06)',
+        backdrop: 'rgba(248, 250, 252, 0.85)',
+      },
+      text: {
+        primary: '#0F172A',
+        secondary: '#475569',
+        muted: '#94A3B8',
+        disabled: '#CBD5E1',
+      },
+      border: {
+        subtle: 'rgba(0, 0, 0, 0.08)',
+        medium: 'rgba(0, 0, 0, 0.15)',
+        strong: 'rgba(0, 0, 0, 0.25)',
+        focus: '#2563EB',
+      },
+      status: {
+        success: '#059669',
+        successBg: 'rgba(5, 150, 105, 0.1)',
+        warning: '#D97706',
+        warningBg: 'rgba(217, 119, 6, 0.1)',
+        error: '#DC2626',
+        errorBg: 'rgba(220, 38, 38, 0.1)',
+        info: '#2563EB',
+        infoBg: 'rgba(37, 99, 235, 0.1)',
+      },
+    },
+    shadows: {
+      card: '0 2px 12px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.06)',
+      cardHover: '0 8px 24px -2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(37, 99, 235, 0.25)',
+      dropdown: '0 10px 30px -2px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08)',
+      glow: '0 0 20px rgba(37, 99, 235, 0.15)',
+    },
+  },
+  typography: {
+    fontFamily: '"Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    codeFamily: '"JetBrains Mono", "Fira Code", monospace',
+  },
+  shape: {
+    borderRadiusSm: '6px',
+    borderRadiusMd: '10px',
+    borderRadiusLg: '14px',
+    borderRadiusXl: '20px',
+    borderRadiusFull: '9999px',
+  },
+  transitions: {
+    fast: '150ms cubic-bezier(0.4, 0, 0.2, 1)',
+    normal: '250ms cubic-bezier(0.4, 0, 0.2, 1)',
+    smooth: '350ms cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+};
+

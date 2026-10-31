@@ -1,0 +1,10 @@
+{
+  "name": "shorturl-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:frontend": "npm --prefix url run build",
+    "dev:frontend": "npm --prefix url run dev",
+    "start:backend": "node backend/src/app.js"
+  }
+}
