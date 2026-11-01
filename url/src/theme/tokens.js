@@ -123,6 +123,128 @@ export const tokens = {
       glow: '0 0 20px rgba(0, 116, 228, 0.15)',
     },
   },
+  shortie: {
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#0055FF', // Shortie signature electric blue (Image 1)
+        light: '#2563EB',
+        dark: '#003ECC',
+        contrastText: '#FFFFFF',
+      },
+      secondary: {
+        main: '#1E243A',
+        light: '#293252',
+        dark: '#141829',
+        contrastText: '#FFFFFF',
+      },
+      accent: {
+        blue: '#0055FF',
+        green: '#10B981',
+        orange: '#F59E0B',
+        red: '#EF4444',
+      },
+      background: {
+        default: '#0E1322', // Shortie dark navy
+        surface: '#151C30',
+        paper: '#1C243D',
+        card: '#1C243D',
+        elevated: '#273254',
+        hover: 'rgba(255, 255, 255, 0.06)',
+        active: 'rgba(255, 255, 255, 0.10)',
+        backdrop: 'rgba(14, 19, 34, 0.85)',
+      },
+      text: {
+        primary: '#FFFFFF',
+        secondary: '#94A3B8',
+        muted: '#64748B',
+        disabled: '#475569',
+      },
+      border: {
+        subtle: 'rgba(255, 255, 255, 0.10)',
+        medium: 'rgba(255, 255, 255, 0.18)',
+        strong: 'rgba(255, 255, 255, 0.28)',
+        focus: '#0055FF',
+      },
+      status: {
+        success: '#10B981',
+        successBg: 'rgba(16, 185, 129, 0.14)',
+        warning: '#F59E0B',
+        warningBg: 'rgba(245, 158, 11, 0.14)',
+        error: '#EF4444',
+        errorBg: 'rgba(239, 68, 68, 0.14)',
+        info: '#0055FF',
+        infoBg: 'rgba(0, 85, 255, 0.14)',
+      },
+    },
+    shadows: {
+      card: '0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+      cardHover: '0 10px 30px -4px rgba(0, 85, 255, 0.25), 0 0 0 1px rgba(0, 85, 255, 0.4)',
+      dropdown: '0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12)',
+      glow: '0 0 25px rgba(0, 85, 255, 0.35)',
+    },
+  },
+  tinu: {
+    palette: {
+      mode: 'light',
+      primary: {
+        main: '#16A34A', // Tinu signature fresh forest/lime green (Image 2)
+        light: '#22C55E',
+        dark: '#15803D',
+        contrastText: '#FFFFFF',
+      },
+      secondary: {
+        main: '#EFE7DC',
+        light: '#F5EDE2',
+        dark: '#E2D8CA',
+        contrastText: '#18181B',
+      },
+      accent: {
+        blue: '#2563EB',
+        green: '#16A34A',
+        orange: '#EA580C',
+        red: '#DC2626',
+      },
+      background: {
+        default: '#FBF8F3', // Warm editorial sand/cream
+        surface: '#F4EDE4', // Soft beige surface
+        paper: '#FFFFFF',   // White crisp cards
+        card: '#FFFFFF',
+        elevated: '#ECE3D6',
+        hover: 'rgba(0, 0, 0, 0.04)',
+        active: 'rgba(0, 0, 0, 0.08)',
+        backdrop: 'rgba(251, 248, 243, 0.88)',
+      },
+      text: {
+        primary: '#18181B', // Deep editorial charcoal
+        secondary: '#52525B',
+        muted: '#71717A',
+        disabled: '#A1A1AA',
+      },
+      border: {
+        subtle: 'rgba(0, 0, 0, 0.08)',
+        medium: 'rgba(0, 0, 0, 0.15)',
+        strong: 'rgba(0, 0, 0, 0.25)',
+        focus: '#16A34A',
+      },
+      status: {
+        success: '#16A34A',
+        successBg: '#DCFCE7',
+        warning: '#D97706',
+        warningBg: '#FEF3C7',
+        error: '#DC2626',
+        errorBg: '#FEE2E2',
+        info: '#2563EB',
+        infoBg: '#DBEAFE',
+      },
+    },
+    shadows: {
+      card: '0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 24px -6px rgba(0, 0, 0, 0.06)',
+      cardHover: '0 6px 20px -2px rgba(22, 163, 74, 0.15), 0 16px 36px -4px rgba(0, 0, 0, 0.08)',
+      dropdown: '0 12px 32px -4px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06)',
+      glow: '0 0 20px rgba(34, 197, 94, 0.2)',
+    },
+  },
   typography: {
     fontFamily: '"optimisticAI", "Optimistic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     bodyFamily: '"optimisticText", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',

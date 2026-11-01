@@ -194,6 +194,10 @@ export const IconChevronDown = createIcon(
   <polyline points="6 9 12 15 18 9" />
 );
 
+export const IconChevronUp = createIcon(
+  <polyline points="18 15 12 9 6 15" />
+);
+
 export const IconChevronRight = createIcon(
   <polyline points="9 18 15 12 9 6" />
 );

@@ -140,3 +140,86 @@ input, textarea, select {
   font-family: inherit;
   outline: none;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   SHORTIE UI THEME (Design Reference 1: Electric Blue + Deep Navy)
+   ───────────────────────────────────────────────────────────── */
+[data-theme="shortie"] {
+  --color-bg-default: #0E1322;
+  --color-bg-surface: #151C30;
+  --color-bg-paper: #1C243D;
+  --color-bg-card: #1C243D;
+  --color-bg-elevated: #273254;
+  --color-bg-hover: rgba(255, 255, 255, 0.06);
+  --color-bg-active: rgba(255, 255, 255, 0.10);
+  --color-bg-backdrop: rgba(14, 19, 34, 0.85);
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-disabled: #475569;
+
+  --color-primary: #0055FF;
+  --color-primary-light: #2563EB;
+  --color-primary-dark: #003ECC;
+
+  --color-secondary: #1E243A;
+  --color-border-subtle: rgba(255, 255, 255, 0.10);
+  --color-border-medium: rgba(255, 255, 255, 0.18);
+  --color-border-strong: rgba(255, 255, 255, 0.28);
+
+  --color-status-success: #10B981;
+  --color-status-warning: #F59E0B;
+  --color-status-error: #EF4444;
+  --color-status-info: #0055FF;
+
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-card-hover: 0 10px 30px -4px rgba(0, 85, 255, 0.25), 0 0 0 1px rgba(0, 85, 255, 0.4);
+  --shadow-dropdown: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TINU.BE UI THEME (Design Reference 2: Editorial Warm Sand + Green)
+   ───────────────────────────────────────────────────────────── */
+[data-theme="tinu"] {
+  --color-bg-default: #FBF8F3;
+  --color-bg-surface: #F4EDE4;
+  --color-bg-paper: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-bg-elevated: #ECE3D6;
+  --color-bg-hover: rgba(0, 0, 0, 0.04);
+  --color-bg-active: rgba(0, 0, 0, 0.08);
+  --color-bg-backdrop: rgba(251, 248, 243, 0.88);
+
+  --color-text-primary: #18181B;
+  --color-text-secondary: #52525B;
+  --color-text-muted: #71717A;
+  --color-text-disabled: #A1A1AA;
+
+  --color-primary: #16A34A;
+  --color-primary-light: #22C55E;
+  --color-primary-dark: #15803D;
+
+  --color-secondary: #EFE7DC;
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  --color-border-medium: rgba(0, 0, 0, 0.15);
+  --color-border-strong: rgba(0, 0, 0, 0.25);
+
+  --color-status-success: #16A34A;
+  --color-status-warning: #D97706;
+  --color-status-error: #DC2626;
+  --color-status-info: #2563EB;
+
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 24px -6px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 6px 20px -2px rgba(22, 163, 74, 0.15), 0 16px 36px -4px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: 0 12px 32px -4px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

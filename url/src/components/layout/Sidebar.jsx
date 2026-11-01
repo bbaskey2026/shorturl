@@ -18,8 +18,13 @@ export const Sidebar = ({
   onSelectTab,
   isCollapsed,
   onToggleCollapse,
+  role = 'CUSTOMER',
+  onRequireAdminAuth,
 }) => {
+  const isAdmin = role === 'ADMIN';
+
   const navItems = [
+    { id: 'landing', label: 'Home Showcase', icon: <IconZap size={17} />, badge: 'Shortie' },
     { id: 'dashboard', label: 'Overview', icon: <IconBarChart size={17} /> },
     { id: 'services', label: 'Platform Services', icon: <IconLayers size={17} />, badge: 'Core' },
     { id: 'links', label: 'Links', icon: <IconLink size={17} />, badge: '5' },
@@ -28,22 +33,42 @@ export const Sidebar = ({
     { id: 'qrcodes', label: 'QR Studio', icon: <IconQrCode size={17} /> },
     { id: 'folders', label: 'Folders & Tags', icon: <IconFolder size={17} /> },
     { id: 'subscriptions', label: 'Plans & Limits', icon: <IconCreditCard size={17} /> },
-    { id: 'admin', label: 'Admin Portal', icon: <IconShield size={17} />, badge: 'Staff' },
+    { id: 'admin', label: 'Admin Portal', icon: <IconShield size={17} />, badge: isAdmin ? 'Staff' : 'Protected' },
   ];
+
+  const handleItemClick = (id) => {
+    if (id === 'admin' && !isAdmin) {
+      if (typeof onRequireAdminAuth === 'function') {
+        onRequireAdminAuth();
+        return;
+      }
+    }
+    onSelectTab(id);
+  };
 
   return (
     <aside className={`${styles.sidebar} ${isCollapsed ? styles.sidebarCollapsed : ''}`}>
       <div className={styles.logoArea}>
         {!isCollapsed && (
-          <div className={styles.logo}>
+          <div
+            className={styles.logo}
+            onClick={() => onSelectTab('landing')}
+            style={{ cursor: 'pointer' }}
+            title="Go to Home Showcase"
+          >
             <div className={styles.logoIcon}>
               <IconZap size={16} />
             </div>
-            <span>ShortSaaS</span>
+            <span>ShortSaaS ♾️</span>
           </div>
         )}
         {isCollapsed && (
-          <div className={styles.logoIcon} style={{ margin: '0 auto' }}>
+          <div
+            className={styles.logoIcon}
+            onClick={() => onSelectTab('landing')}
+            style={{ margin: '0 auto', cursor: 'pointer' }}
+            title="Go to Home Showcase"
+          >
             <IconZap size={16} />
           </div>
         )}
@@ -64,7 +89,7 @@ export const Sidebar = ({
             <div
               key={item.id}
               className={`${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
-              onClick={() => onSelectTab(item.id)}
+              onClick={() => handleItemClick(item.id)}
               title={isCollapsed ? item.label : undefined}
             >
               {item.icon}

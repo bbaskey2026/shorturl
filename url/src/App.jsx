@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './theme/ThemeContext';
+import { AuthProvider, useAuth } from './features/auth/AuthContext';
 import MuseLayout from './components/layout/MuseLayout';
 import DashboardView from './features/dashboard/DashboardView';
 import LinkManagementView from './features/links/LinkManagementView';
@@ -10,7 +11,11 @@ import FoldersView from './features/folders/FoldersView';
 import SubscriptionView from './features/subscriptions/SubscriptionView';
 import AdminDashboardView from './features/admin/AdminDashboardView';
 import PlatformServicesView from './features/services/PlatformServicesView';
+import LandingShowcaseView from './features/landing/LandingShowcaseView';
 import LinkShortenerModal from './features/links/LinkShortenerModal';
+import AuthModal from './features/auth/AuthModal';
+import Badge from './components/common/Badge';
+import { IconShield } from './components/common/Icons';
 import {
   initialLinks,
   initialFolders,
@@ -20,10 +25,14 @@ import {
 } from './services/mockData';
 import './styles/theme.css';
 
-export const App = () => {
-  const [currentTab, setCurrentTab] = useState('dashboard');
+const AppContent = () => {
+  const { user: authUser, role, isAuthenticated, logout } = useAuth();
+
+  const [currentTab, setCurrentTab] = useState('landing');
   const [searchQuery, setSearchQuery] = useState('');
   const [isShortenerOpen, setIsShortenerOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalTab, setAuthModalTab] = useState('customer-login');
   const [selectedLinkForAnalytics, setSelectedLinkForAnalytics] = useState(null);
 
   // Initialize links: merge existing localStorage with rich initial fixtures if empty
@@ -72,6 +81,16 @@ export const App = () => {
 
   const [analytics, setAnalytics] = useState(initialAnalytics);
   const [user, setUser] = useState(initialUser);
+
+  // Sync user profile when authenticated user changes
+  const effectiveUser = authUser
+    ? {
+        ...user,
+        name: authUser.name || user.name,
+        email: authUser.email || user.email,
+        role: authUser.role || 'CUSTOMER',
+      }
+    : user;
 
   // Save links whenever updated
   useEffect(() => {
@@ -156,104 +175,237 @@ export const App = () => {
     alert(`Upgraded to ${planId.toUpperCase()} plan successfully!`);
   };
 
+  const handleOpenAuth = (tab = 'customer-login') => {
+    setAuthModalTab(tab);
+    setIsAuthModalOpen(true);
+  };
+
+  const handleRequireAdminAuth = () => {
+    setAuthModalTab('admin-login');
+    setIsAuthModalOpen(true);
+  };
+
+  return (
+    <MuseLayout
+      currentTab={currentTab}
+      onSelectTab={setCurrentTab}
+      onOpenShortener={() => setIsShortenerOpen(true)}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      user={effectiveUser}
+      role={role}
+      isAuthenticated={isAuthenticated}
+      onOpenAuth={handleOpenAuth}
+      onLogout={logout}
+      onRequireAdminAuth={handleRequireAdminAuth}
+    >
+      {currentTab === 'landing' && (
+        <LandingShowcaseView
+          onSelectTab={setCurrentTab}
+          onOpenShortener={() => setIsShortenerOpen(true)}
+          onCreateLink={handleCreateLink}
+          onOpenAuth={handleOpenAuth}
+          links={links}
+          domains={domains.map((d) => (typeof d === 'string' ? d : d.domain || 'shortie.link'))}
+        />
+      )}
+
+      {currentTab === 'dashboard' && (
+        <DashboardView
+          links={links}
+          analytics={analytics}
+          onOpenShortener={() => setIsShortenerOpen(true)}
+          onSelectTab={setCurrentTab}
+          onToggleLinkActive={handleToggleLinkActive}
+          onSelectLinkForAnalytics={handleViewAnalyticsForLink}
+        />
+      )}
+
+      {currentTab === 'services' && (
+        <PlatformServicesView
+          onSelectTab={setCurrentTab}
+          onOpenShortener={() => setIsShortenerOpen(true)}
+          onCreateLink={handleCreateLink}
+          domains={domains}
+          links={links}
+        />
+      )}
+
+      {currentTab === 'links' && (
+        <LinkManagementView
+          links={links}
+          folders={folders}
+          domains={domains}
+          onUpdateLink={handleUpdateLink}
+          onDeleteLink={handleDeleteLink}
+          onToggleActive={handleToggleLinkActive}
+          onOpenShortener={() => setIsShortenerOpen(true)}
+          onViewAnalytics={handleViewAnalyticsForLink}
+        />
+      )}
+
+      {currentTab === 'analytics' && (
+        <AnalyticsView
+          analytics={analytics}
+          links={links}
+          selectedLink={selectedLinkForAnalytics}
+          onClearSelectedLink={() => setSelectedLinkForAnalytics(null)}
+        />
+      )}
+
+      {currentTab === 'domains' && (
+        <CustomDomainsView
+          domains={domains}
+          onAddDomain={handleAddDomain}
+          onDeleteDomain={handleDeleteDomain}
+          onSetDefaultDomain={handleSetDefaultDomain}
+        />
+      )}
+
+      {currentTab === 'qrcodes' && (
+        <QRCodeStudioView links={links} />
+      )}
+
+      {currentTab === 'folders' && (
+        <FoldersView
+          folders={folders}
+          links={links}
+          onCreateFolder={handleCreateFolder}
+          onDeleteFolder={handleDeleteFolder}
+        />
+      )}
+
+      {currentTab === 'subscriptions' && (
+        <SubscriptionView
+          currentPlan={user.plan}
+          onUpgradePlan={handleUpgradePlan}
+        />
+      )}
+
+      {currentTab === 'admin' && (
+        role === 'ADMIN' ? (
+          <AdminDashboardView links={links} domains={domains} />
+        ) : (
+          <div
+            style={{
+              maxWidth: '560px',
+              margin: '60px auto',
+              textAlign: 'center',
+              padding: '40px 32px',
+              background: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-lg)',
+              boxShadow: 'var(--shadow-card)',
+            }}
+          >
+            <div
+              style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 18px',
+                color: 'var(--color-status-error, #ef4444)',
+              }}
+            >
+              <IconShield size={28} />
+            </div>
+            <Badge variant="error" size="sm" style={{ marginBottom: '12px' }}>
+              RESTRICTED ACCESS
+            </Badge>
+            <h2
+              style={{
+                fontSize: '20px',
+                fontWeight: 600,
+                color: 'var(--color-text-primary)',
+                marginBottom: '8px',
+              }}
+            >
+              Administrative Privileges Required
+            </h2>
+            <p
+              style={{
+                fontSize: '13.5px',
+                color: 'var(--color-text-muted)',
+                lineHeight: '1.6',
+                marginBottom: '24px',
+              }}
+            >
+              The Administrator Portal contains platform tenant management, telemetry, and security
+              audit logs. Access is strictly limited to authenticated staff administrators.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setCurrentTab('dashboard')}
+                style={{
+                  padding: '9px 18px',
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  borderRadius: 'var(--radius-md)',
+                  background: 'var(--color-surface-hover)',
+                  border: '1px solid var(--color-border)',
+                  color: 'var(--color-text-primary)',
+                  cursor: 'pointer',
+                }}
+              >
+                Return to Dashboard
+              </button>
+              <button
+                onClick={handleRequireAdminAuth}
+                style={{
+                  padding: '9px 18px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  borderRadius: 'var(--radius-md)',
+                  background: 'var(--color-primary)',
+                  border: 'none',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                }}
+              >
+                Authenticate as Staff Admin
+              </button>
+            </div>
+          </div>
+        )
+      )}
+
+      {/* Global Shortener Modal */}
+      <LinkShortenerModal
+        isOpen={isShortenerOpen}
+        onClose={() => setIsShortenerOpen(false)}
+        domains={domains}
+        folders={folders}
+        onCreateLink={handleCreateLink}
+      />
+
+      {/* Centralized Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialTab={authModalTab}
+        onSuccess={(authRole) => {
+          if (authRole === 'admin') {
+            setCurrentTab('admin');
+          }
+        }}
+      />
+    </MuseLayout>
+  );
+};
+
+export const App = () => {
   return (
     <ThemeProvider>
-      <MuseLayout
-        currentTab={currentTab}
-        onSelectTab={setCurrentTab}
-        onOpenShortener={() => setIsShortenerOpen(true)}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        user={user}
-      >
-        {currentTab === 'dashboard' && (
-          <DashboardView
-            links={links}
-            analytics={analytics}
-            onOpenShortener={() => setIsShortenerOpen(true)}
-            onSelectTab={setCurrentTab}
-            onToggleLinkActive={handleToggleLinkActive}
-            onSelectLinkForAnalytics={handleViewAnalyticsForLink}
-          />
-        )}
-
-        {currentTab === 'services' && (
-          <PlatformServicesView
-            onSelectTab={setCurrentTab}
-            onOpenShortener={() => setIsShortenerOpen(true)}
-            onCreateLink={handleCreateLink}
-            domains={domains}
-            links={links}
-          />
-        )}
-
-        {currentTab === 'links' && (
-          <LinkManagementView
-            links={links}
-            folders={folders}
-            domains={domains}
-            onUpdateLink={handleUpdateLink}
-            onDeleteLink={handleDeleteLink}
-            onToggleActive={handleToggleLinkActive}
-            onOpenShortener={() => setIsShortenerOpen(true)}
-            onViewAnalytics={handleViewAnalyticsForLink}
-          />
-        )}
-
-        {currentTab === 'analytics' && (
-          <AnalyticsView
-            analytics={analytics}
-            links={links}
-            selectedLink={selectedLinkForAnalytics}
-            onClearSelectedLink={() => setSelectedLinkForAnalytics(null)}
-          />
-        )}
-
-        {currentTab === 'domains' && (
-          <CustomDomainsView
-            domains={domains}
-            onAddDomain={handleAddDomain}
-            onDeleteDomain={handleDeleteDomain}
-            onSetDefaultDomain={handleSetDefaultDomain}
-          />
-        )}
-
-        {currentTab === 'qrcodes' && (
-          <QRCodeStudioView links={links} />
-        )}
-
-        {currentTab === 'folders' && (
-          <FoldersView
-            folders={folders}
-            links={links}
-            onCreateFolder={handleCreateFolder}
-            onDeleteFolder={handleDeleteFolder}
-          />
-        )}
-
-        {currentTab === 'subscriptions' && (
-          <SubscriptionView
-            currentPlan={user.plan}
-            onUpgradePlan={handleUpgradePlan}
-          />
-        )}
-
-        {currentTab === 'admin' && (
-          <AdminDashboardView links={links} domains={domains} />
-        )}
-
-        {/* Global Shortener Modal */}
-        <LinkShortenerModal
-          isOpen={isShortenerOpen}
-          onClose={() => setIsShortenerOpen(false)}
-          domains={domains}
-          folders={folders}
-          onCreateLink={handleCreateLink}
-        />
-      </MuseLayout>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </ThemeProvider>
   );
 };
 
 export default App;
-

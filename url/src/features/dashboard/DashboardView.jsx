@@ -127,6 +127,74 @@ export const DashboardView = ({
         </div>
       </div>
 
+      {/* Shortie 5-Step Quick Action Selector (from Image 1) */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '12px',
+          padding: '12px 18px',
+          borderRadius: 'var(--radius-lg)',
+          background: 'var(--color-bg-paper)',
+          border: '1px solid var(--color-border-subtle)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            HOW WE WORK ♾️
+          </span>
+          <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>• Fast 5-Step URL Lifecycle:</span>
+        </div>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {[
+            { id: 1, label: 'Put Link', action: onOpenShortener },
+            { id: 2, label: 'Click Shortener', action: onOpenShortener },
+            { id: 3, label: 'Create Custom URL', action: () => onSelectTab('domains') },
+            { id: 4, label: 'Create QR Code', action: () => onSelectTab('qrcodes') },
+            { id: 5, label: 'Put Tracker Link', action: () => onSelectTab('analytics') },
+          ].map((item) => (
+            <button
+              key={item.id}
+              onClick={item.action}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '5px 12px',
+                borderRadius: '9999px',
+                background: 'var(--color-bg-surface)',
+                border: '1px solid var(--color-border-subtle)',
+                color: 'var(--color-text-secondary)',
+                fontSize: '11.5px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  background: 'var(--color-primary)',
+                  color: '#ffffff',
+                  fontSize: '9.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                }}
+              >
+                {item.id}
+              </span>
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Top 4 Metrics Bento Grid */}
       <div
         style={{

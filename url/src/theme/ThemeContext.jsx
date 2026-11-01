@@ -12,9 +12,9 @@ const ThemeContext = createContext({
 export const ThemeProvider = ({ children }) => {
   const [themeMode, setThemeModeState] = useState(() => {
     try {
-      return localStorage.getItem('shorturl_theme_mode') || 'dark';
+      return localStorage.getItem('shorturl_theme_mode') || 'shortie';
     } catch {
-      return 'dark';
+      return 'shortie';
     }
   });
 
@@ -43,13 +43,16 @@ export const ThemeProvider = ({ children }) => {
   };
 
   const toggleTheme = () => {
-    if (themeMode === 'dark') setThemeMode('light');
-    else if (themeMode === 'light') setThemeMode('system');
-    else setThemeMode('dark');
+    const cycle = ['shortie', 'tinu', 'dark', 'light'];
+    const nextIdx = (cycle.indexOf(themeMode) + 1) % cycle.length;
+    setThemeMode(cycle[nextIdx]);
   };
 
-  const activeMode = themeMode === 'system' ? (systemIsDark ? 'dark' : 'light') : themeMode;
-  const currentTokens = activeMode === 'dark' ? tokens.dark : tokens.light;
+  const activeMode = themeMode === 'system'
+    ? (systemIsDark ? 'shortie' : 'tinu')
+    : themeMode;
+
+  const currentTokens = tokens[activeMode] || (activeMode === 'light' ? tokens.light : tokens.shortie || tokens.dark);
 
   // Sync CSS variables to document root
   useEffect(() => {

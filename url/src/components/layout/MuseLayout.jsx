@@ -11,6 +11,11 @@ export const MuseLayout = ({
   searchQuery,
   setSearchQuery,
   user,
+  role = 'CUSTOMER',
+  isAuthenticated = false,
+  onOpenAuth,
+  onLogout,
+  onRequireAdminAuth,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -21,6 +26,8 @@ export const MuseLayout = ({
         onSelectTab={onSelectTab}
         isCollapsed={isCollapsed}
         onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
+        role={role}
+        onRequireAdminAuth={onRequireAdminAuth}
       />
       <div className={styles.mainArea}>
         <Header
@@ -28,6 +35,9 @@ export const MuseLayout = ({
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           user={user}
+          isAuthenticated={isAuthenticated}
+          onOpenAuth={onOpenAuth}
+          onLogout={onLogout}
         />
         <main className={styles.contentContainer}>
           {children}
@@ -38,4 +48,3 @@ export const MuseLayout = ({
 };
 
 export default MuseLayout;
-

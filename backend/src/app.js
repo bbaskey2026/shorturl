@@ -11,6 +11,7 @@ const { success, error } = require('./utils/response');
 
 // Import Module Routes
 const authRoutes = require('./modules/auth/auth.routes');
+const adminAuthRoutes = require('./modules/auth/admin-auth.routes');
 const linksRoutes = require('./modules/links/links.routes');
 const analyticsRoutes = require('./modules/analytics/analytics.routes');
 const domainsRoutes = require('./modules/domains/domains.routes');
@@ -19,18 +20,21 @@ const subscriptionsRoutes = require('./modules/subscriptions/subscriptions.route
 const adminRoutes = require('./modules/admin/admin.routes');
 const linksRepo = require('./modules/links/links.repository');
 const { comparePassword } = require('./utils/hash');
+const { cookieParser } = require('./middleware/cookie.middleware');
 
 const app = express();
 
 // Security & Parsing Middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With'],
   })
 );
 app.use(express.json());
+app.use(cookieParser);
 
 // Health & Telemetry Check
 app.get('/health', async (req, res) => {
@@ -44,8 +48,19 @@ app.get('/health', async (req, res) => {
   });
 });
 
-// Mount API Modules
+// Mount Versioned API Modules (v1)
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/admin/auth', adminAuthRoutes);
+app.use('/api/v1/links', linksRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
+app.use('/api/v1/domains', domainsRoutes);
+app.use('/api/v1/folders', foldersRoutes);
+app.use('/api/v1/subscriptions', subscriptionsRoutes);
+app.use('/api/v1/admin', adminRoutes);
+
+// Backwards-Compatible Unversioned Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin/auth', adminAuthRoutes);
 app.use('/api/links', linksRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/domains', domainsRoutes);

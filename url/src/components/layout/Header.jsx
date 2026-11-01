@@ -8,8 +8,16 @@ import {
   IconMoon,
 } from '../common/Icons';
 
-export const Header = ({ onOpenShortener, searchQuery, setSearchQuery, user }) => {
-  const { themeMode, activeMode, toggleTheme } = useTheme();
+export const Header = ({
+  onOpenShortener,
+  searchQuery,
+  setSearchQuery,
+  user,
+  isAuthenticated,
+  onOpenAuth,
+  onLogout,
+}) => {
+  const { themeMode, activeMode, toggleTheme, setThemeMode } = useTheme();
 
   return (
     <header className={styles.header}>
@@ -36,13 +44,38 @@ export const Header = ({ onOpenShortener, searchQuery, setSearchQuery, user }) =
           <span>New Link</span>
         </button>
 
-        <button
-          className={styles.iconBtn}
-          onClick={toggleTheme}
-          title={`Theme: ${themeMode} (${activeMode}). Click to switch.`}
-        >
-          {activeMode === 'dark' ? <IconSun size={16} /> : <IconMoon size={16} />}
-        </button>
+        {/* Visual Design Style Selector */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <select
+            value={themeMode}
+            onChange={(e) => setThemeMode(e.target.value)}
+            style={{
+              background: 'var(--color-bg-surface)',
+              border: '1px solid var(--color-border-subtle)',
+              borderRadius: '9999px',
+              color: 'var(--color-text-primary)',
+              fontSize: '11.5px',
+              fontWeight: 600,
+              padding: '5px 10px',
+              cursor: 'pointer',
+              outline: 'none',
+            }}
+            title="Switch UI Design Theme"
+          >
+            <option value="shortie">⚡ Shortie UI (Design 1)</option>
+            <option value="tinu">🌱 Tinu.be UI (Design 2)</option>
+            <option value="dark">🌙 Muse Dark</option>
+            <option value="light">☀️ Clean Light</option>
+          </select>
+
+          <button
+            className={styles.iconBtn}
+            onClick={toggleTheme}
+            title={`Active: ${themeMode} (${activeMode}). Click to cycle.`}
+          >
+            {activeMode === 'dark' || themeMode === 'shortie' ? <IconSun size={15} /> : <IconMoon size={15} />}
+          </button>
+        </div>
 
         {/* Live system status pill */}
         <div
@@ -71,36 +104,83 @@ export const Header = ({ onOpenShortener, searchQuery, setSearchQuery, user }) =
           <span style={{ color: 'var(--color-text-secondary)', fontSize: '11.5px' }}>Go Engine</span>
         </div>
 
-        {/* User Profile */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            paddingLeft: '6px',
-            borderLeft: '1px solid var(--color-border-subtle)',
-          }}
-        >
-          <img
-            src={user?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80'}
-            alt="User avatar"
+        {/* Authentication / User Profile Controls */}
+        {isAuthenticated ? (
+          <div
             style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              border: '1px solid var(--color-border-subtle)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              paddingLeft: '6px',
+              borderLeft: '1px solid var(--color-border-subtle)',
             }}
-          />
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)', lineHeight: 1.2 }}>
-              {user?.name || 'Architect'}
-            </span>
-            <span style={{ fontSize: '10.5px', color: 'var(--color-text-muted)', lineHeight: 1.2 }}>
-              {user?.role?.toUpperCase() || 'PRO'}
-            </span>
+          >
+            <div
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '50%',
+                backgroundColor: user?.role === 'ADMIN' ? 'var(--color-primary)' : 'var(--color-bg-elevated)',
+                color: user?.role === 'ADMIN' ? '#FFFFFF' : 'var(--color-text-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '11px',
+                fontWeight: 600,
+                border: '1px solid var(--color-border-subtle)',
+              }}
+            >
+              {user?.name ? user.name.substring(0, 2).toUpperCase() : 'US'}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)', lineHeight: 1.2 }}>
+                {user?.name || 'Customer'}
+              </span>
+              <span
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  color: user?.role === 'ADMIN' ? 'var(--color-primary)' : 'var(--color-text-muted)',
+                  lineHeight: 1.2,
+                }}
+              >
+                {user?.role || 'CUSTOMER'}
+              </span>
+            </div>
+            <button
+              onClick={onLogout}
+              style={{
+                padding: '4px 8px',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'transparent',
+                color: 'var(--color-text-muted)',
+                fontSize: '11.5px',
+                border: '1px solid var(--color-border-subtle)',
+                cursor: 'pointer',
+                transition: 'color var(--transition-fast)',
+              }}
+              title="Log out"
+            >
+              Log out
+            </button>
           </div>
-        </div>
+        ) : (
+          <button
+            onClick={() => onOpenAuth('customer-login')}
+            style={{
+              padding: '6px 16px',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--color-primary)',
+              color: '#FFFFFF',
+              fontSize: '12.5px',
+              fontWeight: 500,
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            Log in
+          </button>
+        )}
       </div>
     </header>
   );
